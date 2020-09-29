@@ -1,13 +1,9 @@
 import { CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 export abstract class BasicModel {
-  @CreateDateColumn({
-    select: false,
-  })
-  createdDate: Date;
+  @CreateDateColumn()
+  criadoEm: Date;
 
-  @UpdateDateColumn({
-    select: false,
-  })
-  updatedDate: Date;
+  @UpdateDateColumn()
+  alteradoEm: Date;
 }
