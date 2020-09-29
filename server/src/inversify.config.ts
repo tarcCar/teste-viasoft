@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 
 import { getDbConnection } from "@config/db";
 import { Usuario } from "@models/usuario";
+import { PontoManterService } from "@services/pontoManterService";
 import { UsuarioService } from "@services/usuarioService";
 
 import { TYPE_DI } from "./constants/typesInjecaoDependencia";
@@ -23,4 +24,5 @@ export const bindings = new AsyncContainerModule(async (bind) => {
     .inRequestScope();
   // Services
   bind<UsuarioService>(UsuarioService).toSelf();
+  bind<PontoManterService>(PontoManterService).toSelf();
 });
