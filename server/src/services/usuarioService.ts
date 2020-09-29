@@ -12,7 +12,11 @@ export class UsuarioService {
   ) {}
 
   public async salvar(usuario: Usuario): Promise<Usuario> {
-    return this.usuarioRepository.save(this.usuarioRepository.create(usuario));
+    const novoUsuario = await this.usuarioRepository.save(
+      this.usuarioRepository.create(usuario)
+    );
+    delete novoUsuario.senha;
+    return novoUsuario;
   }
 
   public async listar(): Promise<Usuario[]> {

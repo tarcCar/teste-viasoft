@@ -8,6 +8,7 @@ import { PontoManter } from "@models/pontoManter";
 import { PontoMelhorar } from "@models/pontoMelhorar";
 import { Usuario } from "@models/usuario";
 import { FeedbackService } from "@services/feedbackService";
+import { LoginService } from "@services/loginService";
 import { PontoManterService } from "@services/pontoManterService";
 import { PontoMelhorarService } from "@services/pontoMelhorarService";
 import { UsuarioService } from "@services/usuarioService";
@@ -49,4 +50,5 @@ export const bindings = new AsyncContainerModule(async (bind) => {
   bind<PontoManterService>(PontoManterService).toSelf();
   bind<PontoMelhorarService>(PontoMelhorarService).toSelf();
   bind<FeedbackService>(FeedbackService).toSelf();
+  bind<LoginService>(LoginService).toSelf();
 });
