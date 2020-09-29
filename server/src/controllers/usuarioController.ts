@@ -26,7 +26,7 @@ const postUsuarioValidator = [
     .withMessage("Senha precisa pelo menos 6 caracteres"),
 ];
 
-@controller("/api/usuario", authMiddleware())
+@controller("/api/usuario")
 export class UsuarioController extends Controller {
   public constructor(private readonly usuarioService: UsuarioService) {
     super();
@@ -54,7 +54,7 @@ export class UsuarioController extends Controller {
    *     security:
    *       - api_key
    */
-  @httpGet("/")
+  @httpGet("/", authMiddleware())
   public async get(): Promise<interfaces.IHttpActionResult> {
     try {
       return this.ok(await this.usuarioService.listar());
