@@ -7,6 +7,7 @@ import { PontoManter } from "@models/pontoManter";
 import { PontoMelhorar } from "@models/pontoMelhorar";
 import { Usuario } from "@models/usuario";
 import { PontoManterService } from "@services/pontoManterService";
+import { PontoMelhorarService } from "@services/pontoMelhorarService";
 import { UsuarioService } from "@services/usuarioService";
 
 import { TYPE_DI } from "./constants/typesInjecaoDependencia";
@@ -39,4 +40,5 @@ export const bindings = new AsyncContainerModule(async (bind) => {
   // Services
   bind<UsuarioService>(UsuarioService).toSelf();
   bind<PontoManterService>(PontoManterService).toSelf();
+  bind<PontoMelhorarService>(PontoMelhorarService).toSelf();
 });
