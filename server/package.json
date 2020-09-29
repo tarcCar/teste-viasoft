@@ -1,10 +1,15 @@
 {
-  "name": "node-ts-boilerplate",
+  "name": "test-viasoft",
   "version": "1.0.0",
-  "description": "node-ts-boilerplate",
+  "description": "test-viasoft",
   "main": "src/server.ts",
   "author": "Tarcísio <tarc.car@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts"
+  },
   "devDependencies": {
     "@types/compression": "^1.7.0",
     "@types/swagger-jsdoc": "^3.0.2",
