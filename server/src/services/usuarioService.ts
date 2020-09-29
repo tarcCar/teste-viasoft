@@ -17,7 +17,7 @@ export class UsuarioService {
 
   public async listar(): Promise<Usuario[]> {
     return this.usuarioRepository.find({
-      select: ["id", "nome", "login", "createdDate", "updatedDate"],
+      select: ["id", "nome", "login", "alteradoEm", "criadoEm"],
     });
   }
 
