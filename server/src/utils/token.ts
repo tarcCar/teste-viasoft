@@ -2,8 +2,10 @@ import jwt from "jsonwebtoken";
 
 export type TokenData = {
   id: number;
-  roles: string[];
 };
+
+const secretJwt =
+  process.env.SECRET_JWT || "goiabailuminattivoadoracomcaimbranaorelha";
 
 export function getTokenFromHeader(header: string): string {
   if (!header || !header.includes("Bearer ")) return null;
@@ -13,8 +15,6 @@ export function getTokenFromHeader(header: string): string {
 }
 
 export function verifyToken(token: string): Promise<TokenData> {
-  const secretJwt =
-    process.env.SECRET_JWT || "goiabailuminattivoadoracomcaimbranaorelha";
   return new Promise((resolve, reject) => {
     jwt.verify(
       token,
@@ -25,6 +25,22 @@ export function verifyToken(token: string): Promise<TokenData> {
       (err: jwt.VerifyErrors, decoded: TokenData) => {
         if (err) reject(err);
         resolve(decoded);
+      }
+    );
+  });
+}
+
+export function generateToken(payload: any): Promise<string> {
+  return new Promise((resolve, reject) => {
+    jwt.sign(
+      payload,
+      secretJwt,
+      {
+        expiresIn: "7d",
+      },
+      (err, token) => {
+        if (err) reject(err);
+        else resolve(token);
       }
     );
   });
