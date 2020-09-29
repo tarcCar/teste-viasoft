@@ -3,9 +3,11 @@ import { AsyncContainerModule } from "inversify";
 import { Repository } from "typeorm";
 
 import { getDbConnection } from "@config/db";
+import { Feedback } from "@models/feedback";
 import { PontoManter } from "@models/pontoManter";
 import { PontoMelhorar } from "@models/pontoMelhorar";
 import { Usuario } from "@models/usuario";
+import { FeedbackService } from "@services/feedbackService";
 import { PontoManterService } from "@services/pontoManterService";
 import { PontoMelhorarService } from "@services/pontoMelhorarService";
 import { UsuarioService } from "@services/usuarioService";
@@ -37,8 +39,14 @@ export const bindings = new AsyncContainerModule(async (bind) => {
       return getRepository<PontoMelhorar>(PontoMelhorar);
     })
     .inRequestScope();
+  bind<Repository<Feedback>>(TYPE_DI.FeedbackRepository)
+    .toDynamicValue(() => {
+      return getRepository<Feedback>(Feedback);
+    })
+    .inRequestScope();
   // Services
   bind<UsuarioService>(UsuarioService).toSelf();
   bind<PontoManterService>(PontoManterService).toSelf();
   bind<PontoMelhorarService>(PontoMelhorarService).toSelf();
+  bind<FeedbackService>(FeedbackService).toSelf();
 });
