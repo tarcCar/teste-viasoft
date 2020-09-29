@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 
 import { getDbConnection } from "@config/db";
 import { PontoManter } from "@models/pontoManter";
+import { PontoMelhorar } from "@models/pontoMelhorar";
 import { Usuario } from "@models/usuario";
 import { PontoManterService } from "@services/pontoManterService";
 import { UsuarioService } from "@services/usuarioService";
@@ -23,9 +24,16 @@ export const bindings = new AsyncContainerModule(async (bind) => {
       return getRepository<Usuario>(Usuario);
     })
     .inRequestScope();
+
   bind<Repository<PontoManter>>(TYPE_DI.PontoManterRepository)
     .toDynamicValue(() => {
       return getRepository<PontoManter>(PontoManter);
+    })
+    .inRequestScope();
+
+  bind<Repository<PontoMelhorar>>(TYPE_DI.PontoMelhorarRepository)
+    .toDynamicValue(() => {
+      return getRepository<PontoMelhorar>(PontoMelhorar);
     })
     .inRequestScope();
   // Services
