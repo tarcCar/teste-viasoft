@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+} from "typeorm";
 
 import { BasicModel } from "./basicModel";
 /**
@@ -26,4 +32,10 @@ export class PontoMelhorar extends BasicModel {
 
   @Column()
   public descricao!: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  descricaoParaMaiuscula(): void {
+    if (this.descricao) this.descricao = this.descricao.toUpperCase();
+  }
 }
