@@ -22,13 +22,36 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
+    'import',
   ],
-  
   rules: {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
     '@typescript-eslint/camelcase': 'off',
-    "camelcase":'off',
-    "jsx-a11y/label-has-associated-control":"off",
-    "no-unused-expressions": ["error", { "allowTaggedTemplates": true }]
+    camelcase: 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'no-unused-expressions': ['error', { allowTaggedTemplates: true }],
+    'no-use-before-define': 'off',
+    'import/no-unresolved': 'error',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      // use <root>/tsconfig.json
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
   },
 };
