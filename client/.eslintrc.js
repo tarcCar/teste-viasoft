@@ -25,6 +25,8 @@ module.exports = {
     'import',
   ],
   rules: {
+    "react/prop-types":"off",
+    "react/jsx-props-no-spreading":"off",
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
     '@typescript-eslint/camelcase': 'off',
     camelcase: 'off',
