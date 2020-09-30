@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { RootState } from '../../store/reducers';
 import Layout from '../Layout';
 
 interface RouteWithLayoutProps extends RouteProps{
@@ -7,13 +9,13 @@ interface RouteWithLayoutProps extends RouteProps{
 const RouteWithLayout:React.FC<RouteWithLayoutProps> = (props) => {
   const { component, ...rest } = props;
   const Component = component as any;
-  const usuarioLogado = true;
+  const loginSucesso = useSelector((state:RootState) => state.loginReducer.loginSucesso);
   return (
     <Route
       {...rest}
       render={(matchProps) => (
         <Layout>
-          {usuarioLogado ? (
+          {loginSucesso ? (
             <Component {...matchProps} />
           ) : (
             <Redirect to="/login" />

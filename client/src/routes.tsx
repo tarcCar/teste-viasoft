@@ -7,7 +7,10 @@ import setUpAxios from './api';
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
 const browserHistory = createBrowserHistory();
+
+// Coloca no axios o history para quando o JWT expirar redirecionar pra tela de login
 setUpAxios(browserHistory);
+
 const Routes = () => (
   <Router history={browserHistory}>
     <Suspense fallback={<div>Loading...</div>}>
