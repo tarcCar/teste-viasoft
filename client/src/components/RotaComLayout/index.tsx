@@ -1,7 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { RootState } from '../../store/reducers';
 import Layout from '../Layout';
 
 interface RouteWithLayoutProps extends RouteProps{
@@ -9,7 +7,9 @@ interface RouteWithLayoutProps extends RouteProps{
 const RouteWithLayout:React.FC<RouteWithLayoutProps> = (props) => {
   const { component, ...rest } = props;
   const Component = component as any;
-  const loginSucesso = useSelector((state:RootState) => state.loginReducer.loginSucesso);
+  // Se ainda tem o token no local storage então está logado,
+  // usei o localstorage em vez do redux do login por causa se o usuario recarregar a pagina
+  const loginSucesso = localStorage.getItem('token');
   return (
     <Route
       {...rest}
