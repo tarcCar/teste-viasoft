@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   loadingLogin: false,
 };
 
-export default function cityReducer(
+export default function LoginReducer(
   state = INITIAL_STATE,
   action: LoginActionsTypes,
 ): any {

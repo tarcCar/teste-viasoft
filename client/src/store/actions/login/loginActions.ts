@@ -14,9 +14,10 @@ const loginAction = (
     dispatch(setLoginLoading(true));
     const loginSucesso = await loginService(login, senha);
     localStorage.setItem('token', loginSucesso.token);
-    return dispatch(setLoginSucesso(loginSucesso));
+    dispatch(setLoginSucesso(loginSucesso));
   } catch (error) {
-    return dispatch(setLoginErro(error.message));
+    console.log(error);
+    dispatch(setLoginErro(error.message));
   }
 };
 
