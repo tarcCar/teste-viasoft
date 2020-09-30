@@ -31,10 +31,18 @@ const useStyles = makeStyles((theme:any) => ({
     alignItems: 'center',
     marginRight: theme.spacing(1),
   },
+  active: {
+    color: theme.palette.primary.main,
+    fontWeight: theme.typography.fontWeightMedium,
+    '& $icon': {
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 
 type CustomRouterLinkProps = {
-    to:string
+    to:string,
+    activeClassName:string
 }
 
 const CustomRouterLink = forwardRef((props:CustomRouterLinkProps, ref:any) => (
@@ -71,6 +79,7 @@ const SidebarNav:React.FC<SidebarNavProps> = (props) => {
             className={classes.button}
             component={CustomRouterLink}
             to={page.href}
+            activeClassName={classes.active}
           >
             <div className={classes.icon}>{page.icon}</div>
             {page.title}

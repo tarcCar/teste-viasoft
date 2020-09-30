@@ -42,7 +42,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Sidebar
         onClose={handleSidebarClose}
         open={openSidebar}
-        variant="persistent"
+        variant="temporary"
       />
       <main className={classes.content}>
         {children}
