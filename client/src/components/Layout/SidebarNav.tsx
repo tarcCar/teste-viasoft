@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import {
   List, ListItem, Button, colors,
 } from '@material-ui/core';
-import { Page } from '../../types/Page';
+import { Page } from '../../types/page';
 
 const useStyles = makeStyles((theme:any) => ({
   root: {},
