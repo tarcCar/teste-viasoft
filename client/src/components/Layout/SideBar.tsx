@@ -50,6 +50,11 @@ const Sidebar:React.FC<SidebarProps> = (props) => {
       icon: <HomeIcon />,
     },
     {
+      title: 'Cadastrar FeedBack',
+      href: '/feedback/cadastro',
+      icon: <InputIcon />,
+    },
+    {
       title: 'Sair',
       href: '/login',
       icon: <InputIcon />,
