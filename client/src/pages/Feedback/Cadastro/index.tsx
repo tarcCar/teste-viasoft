@@ -1,13 +1,16 @@
 import {
   Button,
   CircularProgress,
-  Container, makeStyles,
+  Container, FormControl, InputLabel, makeStyles,
+  TextareaAutosize,
+  TextField,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import InputPontoManter from '../../../components/PontoManter/Input';
+import InputPontoMelhorar from '../../../components/PontoMelhorar/Input';
 import SelectUsuario from '../../../components/Usuario/Select';
 import { RootState } from '../../../store/reducers';
 import { Feedback } from '../../../types/feedback';
@@ -68,6 +71,9 @@ const CadastroFeedback: React.FC = () => {
           if (!values.pontosManter || values.pontosManter.length <= 0) {
             errors.pontosManter = 'Selecionar pelo menos um ponto a manter';
           }
+          if (!values.pontosMelhorar || values.pontosMelhorar.length <= 0) {
+            errors.pontosMelhorar = 'Selecionar pelo menos um ponto a melhorar';
+          }
 
           return errors;
         }}
@@ -111,7 +117,49 @@ const CadastroFeedback: React.FC = () => {
               }}
               errorText={errors.pontosManter}
             />
-
+            <InputPontoMelhorar
+              fullWidth
+              onPontosMelhorarSelecionados={(value) => {
+                setFieldValue('pontosMelhorar', value);
+              }}
+              errorText={errors.pontosMelhorar}
+            />
+            <InputLabel id="sugestoes-select-label">Sugestões</InputLabel>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="sugestoes"
+              name="sugestoes"
+              autoComplete="sugestoes"
+              placeholder="Digite alguma sugestão"
+              onChange={handleChange}
+              onSelect={handleChange}
+              onBlur={handleBlur}
+              value={values.sugestoes}
+              error={errors.sugestoes ? true : false && touched.sugestoes}
+              helperText={errors.sugestoes}
+              multiline
+              rows={4}
+            />
+            <InputLabel id="sugestoes-select-label">Feedback</InputLabel>
+            <TextField
+              variant="outlined"
+              placeholder="Digite o feedBack final"
+              required
+              fullWidth
+              id="feedBackFinal"
+              name="feedBackFinal"
+              autoComplete="feedBackFinal"
+              onChange={handleChange}
+              onSelect={handleChange}
+              onBlur={handleBlur}
+              value={values.feedBackFinal}
+              error={errors.feedBackFinal ? true : false && touched.feedBackFinal}
+              helperText={errors.feedBackFinal}
+              multiline
+              rows={4}
+            />
             <Button
               type="submit"
               fullWidth
