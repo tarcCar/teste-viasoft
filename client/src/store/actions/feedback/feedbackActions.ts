@@ -38,7 +38,9 @@ export const getFeedbacksAction = (idUsuario:number): any => async (dispatch: an
 export const saveFeedbacksAction = (feedback:Feedback): any => async (dispatch: any) => {
   try {
     dispatch(setSaveFeedbackLoading(true));
-    if (feedback.id) {
+    console.log(feedback);
+
+    if (!feedback.id) {
       const novoFeedback = await saveFeedback(feedback);
       dispatch(setSaveFeedback(novoFeedback));
     } else {

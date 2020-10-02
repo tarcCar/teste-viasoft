@@ -11,23 +11,24 @@ import {
 import { authMiddleware } from "@middlewares/authMiddleware";
 import { Feedback } from "@models/feedback";
 import { FeedbackService } from "@services/feedbackService";
+import { UsuarioService } from "@services/usuarioService";
 import { Controller } from "@type/Controller";
 
 const postFeedbackValidator = [
   body("feedBackFinal").notEmpty().withMessage("Feedback final é obrigatório"),
   body("usuarioDestino").notEmpty().withMessage("Usuário é obrigatório"),
-  body("*.pontosManter")
+  body("pontosManter")
     .optional()
     .isArray()
     .withMessage("Pontos para manter precisa ser um array"),
-  body("*.pontosManter.descricao")
+  body("pontosManter.*.descricao")
     .notEmpty()
     .withMessage("Descrição dos Pontos para manter é obrigatório"),
-  body("*.pontosMelhorar")
+  body("pontosMelhorar")
     .optional()
     .isArray()
     .withMessage("Pontos para melhorar precisa ser um array"),
-  body("*.pontosMelhorar.descricao")
+  body("pontosMelhorar.*.descricao")
     .notEmpty()
     .withMessage("Descrição dos Pontos para melhorar é obrigatório"),
 ];
@@ -38,7 +39,10 @@ const getByIdFeedbackValidator = [
 
 @controller("/api/feedback", authMiddleware())
 export class FeedbackController extends Controller {
-  public constructor(private readonly feedBackService: FeedbackService) {
+  public constructor(
+    private readonly feedBackService: FeedbackService,
+    private readonly usuarioService: UsuarioService
+  ) {
     super();
   }
 
@@ -153,6 +157,13 @@ export class FeedbackController extends Controller {
       return errosValidacao;
     }
     try {
+      const usuario = await this.usuarioService.buscarPorId(
+        this.httpContext.user.details.id
+      );
+      if (!usuario) {
+        return this.badRequest("Usuário Origem não foi encontrado");
+      }
+      feedback.usuarioOrigem = usuario;
       return this.ok(await this.feedBackService.salvar(feedback));
     } catch (e) {
       console.log(e);

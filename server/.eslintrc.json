@@ -27,6 +27,7 @@
     ],
     "rules": {
       "no-new": "off",
+      "no-param-reassign":"off",
       "no-prototype-builtins": "off",
       "no-restricted-syntax": "off",
       "max-classes-per-file": "off",

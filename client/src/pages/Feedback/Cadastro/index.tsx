@@ -1,18 +1,20 @@
 import {
   Button,
   CircularProgress,
-  Container, FormControl, InputLabel, makeStyles,
+  Container,
+  makeStyles,
   Paper,
-  TextareaAutosize,
   TextField,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import InputPontoManter from '../../../components/PontoManter/Input';
 import InputPontoMelhorar from '../../../components/PontoMelhorar/Input';
 import SelectUsuario from '../../../components/Usuario/Select';
+import { saveFeedbacksAction } from '../../../store/actions/feedback/feedbackActions';
 import { RootState } from '../../../store/reducers';
 import { Feedback } from '../../../types/feedback';
 
@@ -51,8 +53,24 @@ const initialValues: FeedbackForm = {
 
 const CadastroFeedback: React.FC = () => {
   const classes = useStyles();
-  const loading = useSelector((state:RootState) => state.usuarioReducer.loadingSaveUsuairo);
-  const erroSaveUsuario = useSelector((state:RootState) => state.usuarioReducer.erroSaveUsuario);
+  const loading = useSelector((state:RootState) => state.feedbackReducer.loadingSaveFeedback);
+  const erroSaveUsuario = useSelector((state:RootState) => state.feedbackReducer.erroSaveFeedback);
+  const feedback = useSelector((state:RootState) => state.feedbackReducer.feedback);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (feedback) {
+      history.push('/home');
+    }
+  }, [feedback]);
+
+  const onSubmitCadastro = async (values:Feedback) => {
+    if (values) {
+      dispatch(saveFeedbacksAction(values));
+    }
+  };
+
   return (
     <Container component="main" maxWidth="lg">
       <Formik
@@ -76,7 +94,7 @@ const CadastroFeedback: React.FC = () => {
           return errors;
         }}
         onSubmit={(values) => {
-          // onSubmitLogin(values);
+          onSubmitCadastro(values);
         }}
       >
         {({
@@ -169,7 +187,7 @@ const CadastroFeedback: React.FC = () => {
                 className={classes.submit}
                 disabled={!isValid || loading}
               >
-                Entrar
+                Salvar
                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
               </Button>
             </Paper>

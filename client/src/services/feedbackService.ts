@@ -20,6 +20,8 @@ export const saveFeedback = async (feedback:Feedback):Promise<Feedback> => {
     const { data } = resposta;
     return data;
   } catch (error) {
+    console.log(error);
+
     if (error.isAxiosError) {
       throw new Error(error.response.data);
     }
