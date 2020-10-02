@@ -41,6 +41,14 @@ const InputPontoMelhorar: React.FC<InputPontoMelhorarProps> = (
   return (
     <>
       <PontoMelhorarAutoComplete onPontoMelhorarSelected={onChangeHandler} error={!!errorText} />
+      {errorText && (
+      <FormHelperText style={{
+        color: 'red',
+      }}
+      >
+        {errorText}
+      </FormHelperText>
+      )}
       <List dense>
         {pontosSelecionados.length > 0 && pontosSelecionados.map((p, index) => (
           <ListItem key={`${p.descricao}_${index}`}>
@@ -56,14 +64,7 @@ const InputPontoMelhorar: React.FC<InputPontoMelhorarProps> = (
         ))}
 
       </List>
-      {errorText && (
-      <FormHelperText style={{
-        color: 'red',
-      }}
-      >
-        {errorText}
-      </FormHelperText>
-      )}
+
     </>
   );
 };

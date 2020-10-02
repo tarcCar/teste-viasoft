@@ -2,6 +2,7 @@ import {
   Button,
   CircularProgress,
   Container, FormControl, InputLabel, makeStyles,
+  Paper,
   TextareaAutosize,
   TextField,
 } from '@material-ui/core';
@@ -16,22 +17,19 @@ import { RootState } from '../../../store/reducers';
 import { Feedback } from '../../../types/feedback';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    padding: theme.spacing(2),
+  },
+  field: {
+    marginBottom: theme.spacing(1),
   },
   buttonProgress: {
     position: 'absolute',
@@ -92,85 +90,89 @@ const CadastroFeedback: React.FC = () => {
           setFieldValue,
         }) => (
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            {erroSaveUsuario && <Alert severity="error">{erroSaveUsuario}</Alert>}
-            <SelectUsuario
-              label="Usuário"
-              variant="outlined"
-              required
-              fullWidth
-              id="usuarioDestino"
-              name="usuarioDestino"
-              autoComplete="usuarioDestino"
-              autoFocus
-              onChange={handleChange}
-              onSelect={handleChange}
-              onBlur={handleBlur}
-              value={values.usuarioDestino}
-              error={errors.usuarioDestino ? true : false && touched.usuarioDestino}
-              errorText={errors.usuarioDestino}
-            />
+            <Paper variant="outlined" className={classes.paper}>
 
-            <InputPontoManter
-              fullWidth
-              onPontosManterSelecionados={(value) => {
-                setFieldValue('pontosManter', value);
-              }}
-              errorText={errors.pontosManter}
-            />
-            <InputPontoMelhorar
-              fullWidth
-              onPontosMelhorarSelecionados={(value) => {
-                setFieldValue('pontosMelhorar', value);
-              }}
-              errorText={errors.pontosMelhorar}
-            />
-            <InputLabel id="sugestoes-select-label">Sugestões</InputLabel>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="sugestoes"
-              name="sugestoes"
-              autoComplete="sugestoes"
-              placeholder="Digite alguma sugestão"
-              onChange={handleChange}
-              onSelect={handleChange}
-              onBlur={handleBlur}
-              value={values.sugestoes}
-              error={errors.sugestoes ? true : false && touched.sugestoes}
-              helperText={errors.sugestoes}
-              multiline
-              rows={4}
-            />
-            <InputLabel id="sugestoes-select-label">Feedback</InputLabel>
-            <TextField
-              variant="outlined"
-              placeholder="Digite o feedBack final"
-              required
-              fullWidth
-              id="feedBackFinal"
-              name="feedBackFinal"
-              autoComplete="feedBackFinal"
-              onChange={handleChange}
-              onSelect={handleChange}
-              onBlur={handleBlur}
-              value={values.feedBackFinal}
-              error={errors.feedBackFinal ? true : false && touched.feedBackFinal}
-              helperText={errors.feedBackFinal}
-              multiline
-              rows={4}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={!isValid || loading}
-            >
-              Entrar
-              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-            </Button>
+              {erroSaveUsuario && <Alert severity="error">{erroSaveUsuario}</Alert>}
+              <SelectUsuario
+                className={classes.field}
+                label="Usuário"
+                variant="outlined"
+                required
+                fullWidth
+                id="usuarioDestino"
+                name="usuarioDestino"
+                autoComplete="usuarioDestino"
+                autoFocus
+                onChange={handleChange}
+                onSelect={handleChange}
+                onBlur={handleBlur}
+                value={values.usuarioDestino}
+                error={errors.usuarioDestino ? true : false && touched.usuarioDestino}
+                errorText={errors.usuarioDestino}
+              />
+
+              <InputPontoManter
+                fullWidth
+                onPontosManterSelecionados={(value) => {
+                  setFieldValue('pontosManter', value);
+                }}
+                errorText={errors.pontosManter}
+              />
+              <InputPontoMelhorar
+                fullWidth
+                onPontosMelhorarSelecionados={(value) => {
+                  setFieldValue('pontosMelhorar', value);
+                }}
+                errorText={errors.pontosMelhorar}
+              />
+              <TextField
+                className={classes.field}
+                label="Sugestões"
+                variant="outlined"
+                fullWidth
+                id="sugestoes"
+                name="sugestoes"
+                autoComplete="sugestoes"
+                placeholder="Digite alguma sugestão"
+                onChange={handleChange}
+                onSelect={handleChange}
+                onBlur={handleBlur}
+                value={values.sugestoes}
+                error={errors.sugestoes ? true : false && touched.sugestoes}
+                helperText={errors.sugestoes}
+                multiline
+                rows={4}
+              />
+              <TextField
+                className={classes.field}
+                label="Feedback"
+                variant="outlined"
+                placeholder="Digite o feedback final"
+                fullWidth
+                id="feedBackFinal"
+                name="feedBackFinal"
+                autoComplete="feedBackFinal"
+                onChange={handleChange}
+                onSelect={handleChange}
+                onBlur={handleBlur}
+                value={values.feedBackFinal}
+                error={errors.feedBackFinal ? true : false && touched.feedBackFinal}
+                helperText={errors.feedBackFinal}
+                multiline
+                rows={4}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={!isValid || loading}
+              >
+                Entrar
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </Button>
+            </Paper>
 
           </form>
         )}

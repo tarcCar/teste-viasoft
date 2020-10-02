@@ -39,7 +39,6 @@ export const PontoMelhorarAutoComplete:React.FC<PontoMelhorarAutoCompleteProps> 
 
   return (
     <>
-      <InputLabel>Pontos a melhorar</InputLabel>
       <Autocomplete
         {...props}
         value={value}
@@ -86,7 +85,7 @@ export const PontoMelhorarAutoComplete:React.FC<PontoMelhorarAutoCompleteProps> 
         renderOption={(option:any) => option.descricao}
         freeSolo
         renderInput={(params) => (
-          <TextField {...params} fullWidth error={error} variant="outlined" />
+          <TextField {...params} label="Pontos a melhorar" placeholder="Digite para procurar ou adicionar um ponto a melhorar" fullWidth error={error} variant="outlined" />
         )}
       />
     </>

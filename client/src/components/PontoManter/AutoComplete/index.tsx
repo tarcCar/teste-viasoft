@@ -38,7 +38,6 @@ export const PontoManterAutoComplete:React.FC<PontoManterAutoCompleteProps> = (
 
   return (
     <>
-      <InputLabel>Pontos a manter</InputLabel>
       <Autocomplete
         {...props}
         value={value}
@@ -58,7 +57,6 @@ export const PontoManterAutoComplete:React.FC<PontoManterAutoCompleteProps> = (
         filterOptions={(options, params) => {
           const filtered = filter(options as PontoManterFilter[], params);
 
-          // Suggest the creation of a new value
           if (params.inputValue !== '') {
             filtered.push({
               inputValue: params.inputValue,
@@ -85,7 +83,7 @@ export const PontoManterAutoComplete:React.FC<PontoManterAutoCompleteProps> = (
         renderOption={(option:any) => option.descricao}
         freeSolo
         renderInput={(params) => (
-          <TextField {...params} fullWidth error={error} variant="outlined" />
+          <TextField {...params} label="Pontos a manter" placeholder="Digite para procurar ou adicionar um ponto a manter" fullWidth error={error} variant="outlined" />
         )}
       />
     </>
