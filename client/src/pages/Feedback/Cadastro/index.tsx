@@ -7,8 +7,10 @@ import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import InputPontoManter from '../../../components/PontoManter/Input';
 import SelectUsuario from '../../../components/Usuario/Select';
 import { RootState } from '../../../store/reducers';
+import { Feedback } from '../../../types/feedback';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,16 +38,24 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -12,
   },
 }));
+
+interface FeedbackForm extends Feedback {
+
+}
+
+const initialValues: FeedbackForm = {
+  pontosManter: [],
+  pontosMelhorar: [],
+};
+
 const CadastroFeedback: React.FC = () => {
   const classes = useStyles();
   const loading = useSelector((state:RootState) => state.usuarioReducer.loadingSaveUsuairo);
   const erroSaveUsuario = useSelector((state:RootState) => state.usuarioReducer.erroSaveUsuario);
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="lg">
       <Formik
-        initialValues={{
-          sugestoes: '', feedBackFinal: '', usuarioDestino: null,
-        }}
+        initialValues={initialValues}
         validate={(values) => {
           const errors:any = {};
           if (!values.feedBackFinal) {
@@ -53,6 +63,10 @@ const CadastroFeedback: React.FC = () => {
           }
           if (!values.usuarioDestino) {
             errors.usuarioDestino = 'Usuario é obrigatório';
+          }
+
+          if (!values.pontosManter || values.pontosManter.length <= 0) {
+            errors.pontosManter = 'Selecionar pelo menos um ponto a manter';
           }
 
           return errors;
@@ -69,7 +83,7 @@ const CadastroFeedback: React.FC = () => {
           handleBlur,
           handleSubmit,
           isValid,
-          /* and other goodies */
+          setFieldValue,
         }) => (
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             {erroSaveUsuario && <Alert severity="error">{erroSaveUsuario}</Alert>}
@@ -86,9 +100,18 @@ const CadastroFeedback: React.FC = () => {
               onSelect={handleChange}
               onBlur={handleBlur}
               value={values.usuarioDestino}
-              error={errors.usuarioDestino !== undefined && touched.usuarioDestino}
-              helperText={errors.usuarioDestino}
+              error={errors.usuarioDestino ? true : false && touched.usuarioDestino}
+              errorText={errors.usuarioDestino}
             />
+
+            <InputPontoManter
+              fullWidth
+              onPontosManterSelecionados={(value) => {
+                setFieldValue('pontosManter', value);
+              }}
+              errorText={errors.pontosManter}
+            />
+
             <Button
               type="submit"
               fullWidth

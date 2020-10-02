@@ -1,6 +1,6 @@
 export type PontoManter = {
-     id: number;
+     id?: number;
      descricao: string;
-     criadoEm: Date;
-     alteradoEm: Date;
+     criadoEm?: Date;
+     alteradoEm?: Date;
 }

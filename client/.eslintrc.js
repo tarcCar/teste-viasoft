@@ -26,6 +26,8 @@ module.exports = {
   ],
   rules: {
     "react/prop-types":"off",
+    "react/no-array-index-key":"off",
+    "import/prefer-default-export":"off",
     "react/jsx-props-no-spreading":"off",
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
     '@typescript-eslint/camelcase': 'off',

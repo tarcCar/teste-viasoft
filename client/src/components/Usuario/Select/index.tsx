@@ -11,11 +11,11 @@ import { RootState } from '../../../store/reducers';
 
 interface SelectUsuarioProps extends SelectProps{
     label:string
-    helperText?:string
+    errorText?:string
 }
 
 const SelectUsuario: React.FC<SelectUsuarioProps> = ({
-  label, helperText, value, ...props
+  label, errorText, value, ...props
 }) => {
   const dispatch = useDispatch();
   const usuarios = useSelector((state:RootState) => state.usuarioReducer.usuarios);
@@ -47,7 +47,7 @@ const SelectUsuario: React.FC<SelectUsuarioProps> = ({
         ))
     }
       </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {errorText && <FormHelperText style={{ color: 'red' }}>{errorText}</FormHelperText>}
     </>
   );
 };
