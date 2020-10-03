@@ -12,7 +12,7 @@ type CardDataTableFeedbakProps = {
 const CardDataTableFeedbak: React.FC<CardDataTableFeedbakProps> = (
   { titulo, feedBacks, feedbacksDoUsuario },
 ) => (
-  <Card>
+  <Card style={{ marginTop: 20 }}>
     <CardHeader title={titulo} />
     <CardContent>
       <DataTableFeedback feedBacks={feedBacks} feedbacksDoUsuario={feedbacksDoUsuario} />
