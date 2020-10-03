@@ -3,18 +3,20 @@ import { UsuarioActionsTypes } from '../actions/usuario/usuarioActionsTypes';
 
 type UsuarioReducerType = {
   usuarios: Usuario[],
+  usuarioSalvo?: Usuario,
   erroGetUsuarios?: string,
   loadingGetUsuarios: boolean,
   erroSaveUsuario?: string,
-  loadingSaveUsuairo: boolean,
+  loadingSaveUsuario: boolean,
 }
 
 const INITIAL_STATE:UsuarioReducerType = {
   usuarios: [],
+  usuarioSalvo: undefined,
   erroGetUsuarios: undefined,
   loadingGetUsuarios: false,
   erroSaveUsuario: undefined,
-  loadingSaveUsuairo: false,
+  loadingSaveUsuario: false,
 };
 
 export default function UsuarioReducer(
@@ -45,21 +47,22 @@ export default function UsuarioReducer(
     case 'SAVE_USUARIO':
       return {
         ...state,
+        usuarioSalvo: action.usuario,
         usuarios: [...state.usuarios, action.usuario],
         erroSaveUsuario: null,
-        loadingSaveUsuairo: false,
+        loadingSaveUsuario: false,
       };
     case 'SAVE_USUARIO_ERROR':
       return {
         ...state,
         usuarios: [],
         erroSaveUsuario: action.error,
-        loadingSaveUsuairo: false,
+        loadingSaveUsuario: false,
       };
     case 'LOADING_SAVE_USUARIO':
       return {
         ...state,
-        loadingSaveUsuairo: action.loading,
+        loadingSaveUsuario: action.loading,
       };
     default:
       return state;

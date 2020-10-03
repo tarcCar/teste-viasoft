@@ -90,7 +90,7 @@ export default function Login() {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values) => {
             onSubmitLogin(values);
           }}
         >
@@ -102,7 +102,6 @@ export default function Login() {
             handleBlur,
             handleSubmit,
             isValid,
-            /* and other goodies */
           }) => (
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
               {erroLogin && <Alert severity="error">{erroLogin}</Alert>}
@@ -152,7 +151,7 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/usuario/cadastro" variant="body2">
                     Não tem conta? clique aqui para criar
                   </Link>
                 </Grid>

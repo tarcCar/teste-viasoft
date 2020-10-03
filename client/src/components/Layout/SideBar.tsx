@@ -6,6 +6,7 @@ import { Divider, Drawer } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import InputIcon from '@material-ui/icons/Input';
 
+import { Feedback, PersonAdd } from '@material-ui/icons';
 import SidebarNav from './SidebarNav';
 
 const useStyles = makeStyles((theme:any) => ({
@@ -52,7 +53,12 @@ const Sidebar:React.FC<SidebarProps> = (props) => {
     {
       title: 'Cadastrar FeedBack',
       href: '/feedback/cadastro',
-      icon: <InputIcon />,
+      icon: <Feedback />,
+    },
+    {
+      title: 'Cadastrar Usuario',
+      href: '/usuario/cadastro',
+      icon: <PersonAdd />,
     },
     {
       title: 'Sair',
