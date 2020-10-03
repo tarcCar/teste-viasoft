@@ -73,8 +73,6 @@ const CadastroFeedback: React.FC = () => {
 
   const onSubmitCadastro = async (values:Feedback) => {
     if (values) {
-      console.log(values);
-
       dispatch(saveFeedbacksAction(values));
     }
   };
@@ -84,7 +82,6 @@ const CadastroFeedback: React.FC = () => {
       const feedBackParaAtualizar = location.state.feedBackParaAtualizar as Feedback;
       if (formRef.current) {
         const form = formRef.current;
-        console.log(feedBackParaAtualizar);
         form.setFieldValue('id', feedBackParaAtualizar.id);
         form.setFieldValue('pontosManter', feedBackParaAtualizar.pontosManter, false);
         form.setFieldValue('pontosMelhorar', feedBackParaAtualizar.pontosMelhorar, false);

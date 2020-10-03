@@ -38,7 +38,6 @@ export const getFeedbacksAction = (): any => async (dispatch: any) => {
 export const saveFeedbacksAction = (feedback:Feedback): any => async (dispatch: any) => {
   try {
     dispatch(setSaveFeedbackLoading(true));
-    console.log(feedback);
 
     if (!feedback.id) {
       const novoFeedback = await saveFeedback(feedback);

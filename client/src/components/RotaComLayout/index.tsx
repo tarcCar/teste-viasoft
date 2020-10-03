@@ -11,7 +11,6 @@ const isAuthenticate = () => localStorage.getItem('token');
 const RouteWithLayout:React.FC<RouteWithLayoutProps> = (props) => {
   const { component, ...rest } = props;
   const Component = component as any;
-  console.log(isAuthenticate());
 
   return (
     <Route

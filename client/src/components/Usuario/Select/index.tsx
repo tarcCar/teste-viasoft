@@ -50,8 +50,6 @@ const SelectUsuario: React.FC<SelectUsuarioProps> = ({
         onChange={onChangeHandler}
         displayEmpty
         renderValue={(valueSelected:any) => {
-          console.log(valueSelected);
-
           if (valueSelected) {
             return valueSelected.nome;
           }
