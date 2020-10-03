@@ -6,6 +6,7 @@ import {
   requestBody,
   interfaces,
   requestParam,
+  httpPut,
 } from "inversify-express-utils";
 
 import { authMiddleware } from "@middlewares/authMiddleware";
@@ -52,14 +53,23 @@ export class FeedbackController extends Controller {
    *   get:
    *     tags:
    *       - Feedback
-   *     description: Lista todos feedbacks que envolveousuário logado
+   *     description: Lista todos feedbacks que envolveo usuário logado, separando os feedback que o usuario criou e os feedback que foram feitos para o usuario
    *     produces:
    *       - application/json
    *     responses:
    *       200:
-   *          description: Um array de feedbacks
+   *          description: Um Objecto com duas propriedades que sepram os feedbacks do usuario e para o usuario
    *          schema:
-   *                $ref: '#/definitions/Feedback'
+   *                type: object
+   *                properties:
+   *                  feedbacksDoUsuario:
+   *                    type: array
+   *                    items:
+   *                      $ref: '#/definitions/Feedback'
+   *                  feedbacksParaUsuario:
+   *                    type: array
+   *                    items:
+   *                      $ref: '#/definitions/Feedback'
    *       401:
    *          description: Token inválido
    *     security:
@@ -69,7 +79,9 @@ export class FeedbackController extends Controller {
   public async get(): Promise<interfaces.IHttpActionResult> {
     try {
       const idUsuarioLogado = this.httpContext.user.details.id;
-      return this.ok(await this.feedBackService.listar(idUsuarioLogado));
+      return this.ok(
+        await this.feedBackService.listar(Number(idUsuarioLogado))
+      );
     } catch (e) {
       console.log(e);
       return this.internalServerError(e.message);
@@ -79,10 +91,10 @@ export class FeedbackController extends Controller {
   /**
    * @swagger
    * /api/feedback/{id}:
-   *   get:
+   *   put:
    *     tags:
    *       - PontoMelhorar
-   *     description: Busca o feedback com todos os campos
+   *     description: Atualiza o feedback
    *     produces:
    *       - application/json
    *     parameters:
@@ -92,6 +104,12 @@ export class FeedbackController extends Controller {
    *         required: true
    *         schema:
    *             type: numeric
+   *       - name: Feedback
+   *         description: Feedback
+   *         in: body
+   *         required: true
+   *         schema:
+   *             $ref: '#/definitions/Feedback'
    *     responses:
    *       200:
    *         description: Feedback
@@ -104,16 +122,25 @@ export class FeedbackController extends Controller {
    *     security:
    *       - api_key
    */
-  @httpGet("/:id", ...getByIdFeedbackValidator)
-  public async getById(
-    @requestParam() id: string
+  @httpPut("/:id", ...getByIdFeedbackValidator, ...postFeedbackValidator)
+  public async put(
+    @requestParam("id") id: string,
+    @requestBody() feedback: Feedback
   ): Promise<interfaces.IHttpActionResult> {
     const errosValidacao = this.validationError();
     if (errosValidacao) {
       return errosValidacao;
     }
     try {
-      return this.ok(await this.feedBackService.buscarPorId(id));
+      const usuario = await this.usuarioService.buscarPorId(
+        this.httpContext.user.details.id
+      );
+      if (!usuario) {
+        return this.badRequest("Usuário Origem não foi encontrado");
+      }
+      feedback.id = id;
+      feedback.usuarioOrigem = usuario;
+      return this.ok(await this.feedBackService.salvar(feedback));
     } catch (e) {
       console.log(e);
       return this.internalServerError(e.message);
