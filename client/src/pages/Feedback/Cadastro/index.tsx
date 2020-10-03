@@ -79,7 +79,7 @@ const CadastroFeedback: React.FC = () => {
   };
 
   useEffect(() => {
-    if (location.state.feedBackParaAtualizar) {
+    if (location.state?.feedBackParaAtualizar) {
       const feedBackParaAtualizar = location.state.feedBackParaAtualizar as Feedback;
       if (formRef.current) {
         const form = formRef.current;
