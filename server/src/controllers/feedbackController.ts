@@ -93,7 +93,7 @@ export class FeedbackController extends Controller {
    * /api/feedback/{id}:
    *   put:
    *     tags:
-   *       - PontoMelhorar
+   *       - Feedback
    *     description: Atualiza o feedback
    *     produces:
    *       - application/json
@@ -152,7 +152,7 @@ export class FeedbackController extends Controller {
    * /api/feedback:
    *   post:
    *     tags:
-   *       - PontoMelhorar
+   *       - Feedback
    *     description: Salva um novo Feedback
    *     produces:
    *       - application/json

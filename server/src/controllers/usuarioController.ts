@@ -38,7 +38,6 @@ export class UsuarioController extends Controller {
    *   get:
    *     tags:
    *       - Usuario
-   *       - Admin
    *     description: Lista todos os usuarios menos o usuario logado
    *     produces:
    *       - application/json
@@ -71,7 +70,6 @@ export class UsuarioController extends Controller {
    *   post:
    *     tags:
    *       - Usuario
-   *       - Admin
    *     description: Salva um nova Usuario
    *     produces:
    *       - application/json
