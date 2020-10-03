@@ -1,5 +1,8 @@
 import {
   Button,
+  Card,
+  CardContent,
+  CardHeader,
   CircularProgress,
   Container,
   makeStyles,
@@ -23,13 +26,11 @@ import { Feedback } from '../../../types/feedback';
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
-    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   paper: {
-    marginTop: theme.spacing(8),
     padding: theme.spacing(2),
   },
   field: {
@@ -97,130 +98,135 @@ const CadastroFeedback: React.FC = () => {
 
   return (
     <Container component="main" maxWidth="lg">
-      <Formik
-        innerRef={formRef}
-        initialValues={initialValues}
-        validate={(values) => {
-          const errors:any = {};
-          if (!values.feedBackFinal) {
-            errors.feedBackFinal = 'Feedback final é obrigatório';
-          }
-          if (!values.usuarioDestino) {
-            errors.usuarioDestino = 'Usuario é obrigatório';
-          }
+      <Card style={{ marginTop: 20 }}>
+        <CardHeader title="Cadastro de Feedback" />
+        <CardContent>
+          <Formik
+            innerRef={formRef}
+            initialValues={initialValues}
+            validate={(values) => {
+              const errors:any = {};
+              if (!values.feedBackFinal) {
+                errors.feedBackFinal = 'Feedback final é obrigatório';
+              }
+              if (!values.usuarioDestino) {
+                errors.usuarioDestino = 'Usuario é obrigatório';
+              }
 
-          if (!values.pontosManter || values.pontosManter.length <= 0) {
-            errors.pontosManter = 'Selecionar pelo menos um ponto a manter';
-          }
-          if (!values.pontosMelhorar || values.pontosMelhorar.length <= 0) {
-            errors.pontosMelhorar = 'Selecionar pelo menos um ponto a melhorar';
-          }
+              if (!values.pontosManter || values.pontosManter.length <= 0) {
+                errors.pontosManter = 'Selecionar pelo menos um ponto a manter';
+              }
+              if (!values.pontosMelhorar || values.pontosMelhorar.length <= 0) {
+                errors.pontosMelhorar = 'Selecionar pelo menos um ponto a melhorar';
+              }
 
-          return errors;
-        }}
-        onSubmit={(values) => {
-          onSubmitCadastro(values);
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isValid,
-          setFieldValue,
-        }) => (
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <Paper variant="outlined" className={classes.paper}>
+              return errors;
+            }}
+            onSubmit={(values) => {
+              onSubmitCadastro(values);
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isValid,
+              setFieldValue,
+            }) => (
+              <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                <Paper className={classes.paper}>
 
-              {erroSaveUsuario && <Alert severity="error">{erroSaveUsuario}</Alert>}
-              <SelectUsuario
-                className={classes.field}
-                label="Usuário"
-                variant="outlined"
-                required
-                fullWidth
-                id="usuarioDestino"
-                name="usuarioDestino"
-                autoComplete="usuarioDestino"
-                autoFocus
-                onSelect={handleChange}
-                value={values.usuarioDestino}
-                error={errors.usuarioDestino ? false : true && touched.usuarioDestino}
-                errorText={errors.usuarioDestino}
-              />
+                  {erroSaveUsuario && <Alert severity="error">{erroSaveUsuario}</Alert>}
+                  <SelectUsuario
+                    className={classes.field}
+                    label="Usuário"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="usuarioDestino"
+                    name="usuarioDestino"
+                    autoComplete="usuarioDestino"
+                    autoFocus
+                    onSelect={handleChange}
+                    value={values.usuarioDestino}
+                    error={errors.usuarioDestino ? false : true && touched.usuarioDestino}
+                    errorText={errors.usuarioDestino}
+                  />
 
-              <InputPontoManter
-                fullWidth
-                onPontosManterSelecionados={(value) => {
-                  setFieldValue('pontosManter', value);
-                }}
-                errorText={errors.pontosManter}
-                value={values.pontosManter}
-              />
-              <InputPontoMelhorar
-                fullWidth
-                onPontosMelhorarSelecionados={(value) => {
-                  setFieldValue('pontosMelhorar', value);
-                }}
-                errorText={errors.pontosMelhorar}
-                value={values.pontosMelhorar}
+                  <InputPontoManter
+                    fullWidth
+                    onPontosManterSelecionados={(value) => {
+                      setFieldValue('pontosManter', value);
+                    }}
+                    errorText={errors.pontosManter}
+                    value={values.pontosManter}
+                  />
+                  <InputPontoMelhorar
+                    fullWidth
+                    onPontosMelhorarSelecionados={(value) => {
+                      setFieldValue('pontosMelhorar', value);
+                    }}
+                    errorText={errors.pontosMelhorar}
+                    value={values.pontosMelhorar}
+                  />
+                  <TextField
+                    className={classes.field}
+                    label="Sugestões"
+                    variant="outlined"
+                    fullWidth
+                    id="sugestoes"
+                    name="sugestoes"
+                    autoComplete="sugestoes"
+                    placeholder="Digite alguma sugestão"
+                    onChange={handleChange}
+                    onSelect={handleChange}
+                    onBlur={handleBlur}
+                    value={values.sugestoes}
+                    error={errors.sugestoes ? true : false && touched.sugestoes}
+                    helperText={errors.sugestoes}
+                    multiline
+                    rows={4}
+                  />
+                  <TextField
+                    className={classes.field}
+                    label="Feedback"
+                    variant="outlined"
+                    placeholder="Digite o feedback final"
+                    fullWidth
+                    id="feedBackFinal"
+                    name="feedBackFinal"
+                    autoComplete="feedBackFinal"
+                    onChange={handleChange}
+                    onSelect={handleChange}
+                    onBlur={handleBlur}
+                    value={values.feedBackFinal}
+                    error={errors.feedBackFinal ? true : false && touched.feedBackFinal}
+                    helperText={errors.feedBackFinal}
+                    multiline
+                    rows={4}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    disabled={!isValid || loading}
+                  >
+                    Salvar
+                    {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                  </Button>
+                </Paper>
 
-              />
-              <TextField
-                className={classes.field}
-                label="Sugestões"
-                variant="outlined"
-                fullWidth
-                id="sugestoes"
-                name="sugestoes"
-                autoComplete="sugestoes"
-                placeholder="Digite alguma sugestão"
-                onChange={handleChange}
-                onSelect={handleChange}
-                onBlur={handleBlur}
-                value={values.sugestoes}
-                error={errors.sugestoes ? true : false && touched.sugestoes}
-                helperText={errors.sugestoes}
-                multiline
-                rows={4}
-              />
-              <TextField
-                className={classes.field}
-                label="Feedback"
-                variant="outlined"
-                placeholder="Digite o feedback final"
-                fullWidth
-                id="feedBackFinal"
-                name="feedBackFinal"
-                autoComplete="feedBackFinal"
-                onChange={handleChange}
-                onSelect={handleChange}
-                onBlur={handleBlur}
-                value={values.feedBackFinal}
-                error={errors.feedBackFinal ? true : false && touched.feedBackFinal}
-                helperText={errors.feedBackFinal}
-                multiline
-                rows={4}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={!isValid || loading}
-              >
-                Salvar
-                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-              </Button>
-            </Paper>
+              </form>
+            )}
+          </Formik>
+        </CardContent>
+      </Card>
 
-          </form>
-        )}
-      </Formik>
     </Container>
   );
 };
