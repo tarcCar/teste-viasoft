@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { Feedback } from '../types/feedback';
 
-export const getAllFeedback = async ():Promise<Feedback[]> => {
+type FeedBacks ={
+  feedbacksDoUsuario:Feedback[],
+  feedbacksParaUsuario:Feedback[],
+}
+
+export const getAllFeedback = async ():Promise<FeedBacks> => {
   try {
     const resposta = await axios.get('/api/feedback');
     const { data } = resposta;
