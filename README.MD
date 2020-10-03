@@ -1,25 +1,25 @@
-# Desenvolva uma aplicação web com as seguintes especificações:
+# Projeto Teste para Viasoft
 
-1 - Deve ser possível fazer login na aplicação (o cadastro de usuário não é mandatório, podendo ser previamente cadastrado);  
-2 - Deve ser possível a um usuário fazer o cadastro de um feedback para outro usuário, contendo as seguintes informações:
-- Usuário;
-- Data;
-- Pontos a melhorar;
-- Pontos a manter;
-- Sugestões;
-- Feedback Final;
-- Deve ser possível a edição de um feedback criado pelo usuário;
-- Deve ser possível visualizar os feedbacks criados por mim e também os feedback que eu criei para outras pessoas.
- 
+Projeto para teste de vaga FullStack javascript da viasoft  
 
-Requisitos técnicos:
+Esse projeto tem duas partes frontend e backend localizados nas pasta client e server respectivamente
 
-As aplicação devem ser divididas em duas camadas: uma API e um frontend;
-A API deve ser feita com Node.js, com bibliotecas ou frameworks de sua escolha;
-A biblioteca frontend pode ser de sua escolha;
-O banco de dados pode ser da sua escolha;
-Testes são bem vindos.
- 
+Em cada pasta dos projeto tem outro arquivo README.MD contendo uma descrição mais detalhada de cada um.
 
+## Para executar o projeto
 
-Envie-nos no campo de resposta um link do Google Drive ou GitHub com o projeto e também todas as instruções para rodar sua aplicação;
+### Backend
+Com o console dentro da pasta server execute o seguinte comando `npm run dev` que vai iniciar o server.
+
+### Frontend 
+Com o console dentro da pasta client execute o seguinte comando `npm start` que vai ser aberto no browser a aplicação.
+
+## Documentação
+Com o servidor do backend inicializado com o navegador acesse o site  
+http://localhost:3001/js-docs  
+Que vai abrir a documentação da api do servidor
+
+## Melhorias que podem ser feitas
+
+- Criar um dockerfile pra subir cada parte da aplicação em um container
+- Criar Testes 
