@@ -50,7 +50,7 @@ export default function Login() {
   const history = useHistory();
 
   const loading = useSelector((state:RootState) => state.loginReducer.loadingLogin);
-  const loginSucesso = useSelector((state:RootState) => state.loginReducer.loginSucesso);
+  const loginSucesso = useSelector((state:RootState) => state.loginReducer.login);
   const erroLogin = useSelector((state:RootState) => state.loginReducer.erroLogin);
 
   useEffect(() => {

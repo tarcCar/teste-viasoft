@@ -1,7 +1,7 @@
 import { LoginActionsTypes } from '../actions/login/loginActionsTypes';
 
 const INITIAL_STATE = {
-  loginSucesso: null,
+  login: null,
   erroLogin: null,
   loadingLogin: false,
 };
@@ -14,14 +14,14 @@ export default function LoginReducer(
     case 'LOGIN_SUCESSO':
       return {
         ...state,
-        loginSucesso: action.login,
+        login: action.login,
         erroLogin: null,
         loadingLogin: false,
       };
     case 'LOGIN_ERRO':
       return {
         ...state,
-        loginSucesso: null,
+        login: null,
         erroLogin: action.error,
         loadingLogin: false,
       };
