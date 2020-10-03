@@ -39,7 +39,7 @@ export class UsuarioController extends Controller {
    *     tags:
    *       - Usuario
    *       - Admin
-   *     description: Lista todos os usuarios
+   *     description: Lista todos os usuarios menos o usuario logado
    *     produces:
    *       - application/json
    *     responses:
@@ -57,7 +57,8 @@ export class UsuarioController extends Controller {
   @httpGet("/", authMiddleware())
   public async get(): Promise<interfaces.IHttpActionResult> {
     try {
-      return this.ok(await this.usuarioService.listar());
+      const idUsuario = this.httpContext.user.details.id;
+      return this.ok(await this.usuarioService.listar(idUsuario));
     } catch (e) {
       console.log(e);
       return this.internalServerError(e.message);

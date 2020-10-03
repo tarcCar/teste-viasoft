@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import { Repository } from "typeorm";
+import { Repository, Not } from "typeorm";
 
 import { TYPE_DI } from "@constants/typesInjecaoDependencia";
 import { Usuario } from "@models/usuario";
@@ -19,9 +19,12 @@ export class UsuarioService {
     return novoUsuario;
   }
 
-  public async listar(): Promise<Usuario[]> {
+  public async listar(idUsuario?: number): Promise<Usuario[]> {
     return this.usuarioRepository.find({
       select: ["id", "nome", "login", "alteradoEm", "criadoEm"],
+      where: {
+        id: Not(idUsuario),
+      },
     });
   }
 
