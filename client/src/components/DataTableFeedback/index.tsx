@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IconButton,
   Paper,
@@ -28,6 +28,7 @@ import {
 } from 'date-fns';
 import { useHistory } from 'react-router';
 import { Feedback } from '../../types/feedback';
+import DialogDetalhesFeedback from '../DialogDetalhesFeedback';
 
 interface TablePaginationActionsProps {
     count: number;
@@ -93,6 +94,8 @@ type DataTableFeedbackProps ={
 const DataTableFeedback: React.FC<DataTableFeedbackProps> = ({ feedBacks, feedbacksDoUsuario }) => {
   const [pagina, setPagina] = useState(0);
   const [linhasPorPagina, setLinhasPorPagina] = useState(5);
+  const [abirDialog, setAbirDialog] = useState(false);
+  const [feedbackDetalhes, setFeedbackDetalhes] = useState<Feedback | null>(null);
   const history = useHistory();
 
   const handleChangePage = (event: any, novaPagina: number) => {
@@ -106,6 +109,10 @@ const DataTableFeedback: React.FC<DataTableFeedbackProps> = ({ feedBacks, feedba
     setPagina(0);
   };
 
+  useEffect(() => {
+    setAbirDialog(!!feedbackDetalhes);
+  }, [feedbackDetalhes]);
+
   const onEditarClickHandler = (feedback:Feedback) => {
     if (feedback) {
       history.push({
@@ -117,107 +124,126 @@ const DataTableFeedback: React.FC<DataTableFeedbackProps> = ({ feedBacks, feedba
     }
   };
 
+  const onDetalheClickHandler = (feedback:Feedback) => {
+    if (feedback) setFeedbackDetalhes(feedback);
+  };
+
+  const handleCloseDialogDetalhes = () => {
+    setFeedbackDetalhes(null);
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              {feedbacksDoUsuario ? 'Para Quem' : 'De Quem'}
-            </TableCell>
-            <TableCell>
-              Sugestões
-            </TableCell>
-            <TableCell>
-              Feedback
-            </TableCell>
-            <TableCell>
-              Criado Em
-            </TableCell>
-            <TableCell>
-              Útima Alteração
-            </TableCell>
-            <TableCell>
-              Detalhes
-            </TableCell>
-            {
+    <>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                {feedbacksDoUsuario ? 'Para Quem' : 'De Quem'}
+              </TableCell>
+              <TableCell>
+                Sugestões
+              </TableCell>
+              <TableCell>
+                Feedback
+              </TableCell>
+              <TableCell>
+                Criado Em
+              </TableCell>
+              <TableCell>
+                Útima Alteração
+              </TableCell>
+              <TableCell>
+                Detalhes
+              </TableCell>
+              {
              feedbacksDoUsuario && (
              <TableCell>
                Editar
              </TableCell>
              )
            }
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {feedBacks.length <= 0
-            ? (
-              <TableRow>
-                <TableCell colSpan={5} align="center">
-                  Nenhum feedback encontrado
-                </TableCell>
-              </TableRow>
-            )
-            : (linhasPorPagina > 0
-              ? feedBacks.slice(
-                pagina * linhasPorPagina, pagina * linhasPorPagina + linhasPorPagina,
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {feedBacks.length <= 0
+              ? (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    Nenhum feedback encontrado
+                  </TableCell>
+                </TableRow>
               )
-              : feedBacks
-            ).map((feedBack) => (
-              <TableRow key={feedBack.id}>
-                <TableCell component="th" scope="row">
-                  {feedbacksDoUsuario
-                    ? feedBack.usuarioDestino?.nome
-                    : feedBack.usuarioOrigem?.nome}
-                </TableCell>
-                <TableCell>
-                  {feedBack.sugestoes}
-                </TableCell>
-                <TableCell>
-                  {feedBack.feedBackFinal}
-                </TableCell>
-                <TableCell>
-                  {feedBack.criadoEm ? format(parseISO(feedBack.criadoEm), 'dd/MM/yyyy HH:mm:ss') : ''}
-                </TableCell>
-                <TableCell>
-                  {feedBack.alteradoEm ? format(parseISO(feedBack.alteradoEm), 'dd/MM/yyyy HH:mm:ss') : ''}
-                </TableCell>
-                <TableCell>
-                  <IconButton>
-                    <Description />
-                  </IconButton>
-                </TableCell>
-                {feedbacksDoUsuario && (
-                <TableCell>
-                  <IconButton onClick={() => { onEditarClickHandler(feedBack); }}>
-                    <Edit />
-                  </IconButton>
-                </TableCell>
-                )}
-              </TableRow>
-            ))}
-        </TableBody>
-        <TableFooter>
-          {feedBacks.length > 0 && (
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-              colSpan={3}
-              count={feedBacks.length}
-              rowsPerPage={linhasPorPagina}
-              page={pagina}
-              SelectProps={{
-                native: true,
-              }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-          )}
-        </TableFooter>
-      </Table>
-    </TableContainer>
+              : (linhasPorPagina > 0
+                ? feedBacks.slice(
+                  pagina * linhasPorPagina, pagina * linhasPorPagina + linhasPorPagina,
+                )
+                : feedBacks
+              ).map((feedBack) => (
+                <TableRow key={feedBack.id}>
+                  <TableCell component="th" scope="row">
+                    {feedbacksDoUsuario
+                      ? feedBack.usuarioDestino?.nome
+                      : feedBack.usuarioOrigem?.nome}
+                  </TableCell>
+                  <TableCell>
+                    {feedBack.sugestoes}
+                  </TableCell>
+                  <TableCell>
+                    {feedBack.feedBackFinal}
+                  </TableCell>
+                  <TableCell>
+                    {feedBack.criadoEm ? format(parseISO(feedBack.criadoEm), 'dd/MM/yyyy HH:mm:ss') : ''}
+                  </TableCell>
+                  <TableCell>
+                    {feedBack.alteradoEm ? format(parseISO(feedBack.alteradoEm), 'dd/MM/yyyy HH:mm:ss') : ''}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => { onDetalheClickHandler(feedBack); }}>
+                      <Description />
+                    </IconButton>
+                  </TableCell>
+                  {feedbacksDoUsuario && (
+                  <TableCell>
+                    <IconButton onClick={() => { onEditarClickHandler(feedBack); }}>
+                      <Edit />
+                    </IconButton>
+                  </TableCell>
+                  )}
+                </TableRow>
+              ))}
+          </TableBody>
+          <TableFooter>
+            {feedBacks.length > 0 && (
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                colSpan={3}
+                count={feedBacks.length}
+                rowsPerPage={linhasPorPagina}
+                page={pagina}
+                SelectProps={{
+                  native: true,
+                }}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+            )}
+          </TableFooter>
+        </Table>
+      </TableContainer>
+      {feedbackDetalhes
+      && abirDialog
+      && (
+      <DialogDetalhesFeedback
+        feedback={feedbackDetalhes}
+        open={abirDialog}
+        handleClose={handleCloseDialogDetalhes}
+      />
+      )}
+    </>
   );
 };
 export default DataTableFeedback;
