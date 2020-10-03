@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +12,7 @@ import Container from "@material-ui/core/Container";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import Alert from "@material-ui/lab/Alert";
 import { RootState } from "../../store/reducers";
 import loginAction from "../../store/actions/login/loginActions";
@@ -48,6 +48,7 @@ export default function Login() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation<any>();
 
   const loading = useSelector(
     (state: RootState) => state.loginReducer.loadingLogin
@@ -59,11 +60,25 @@ export default function Login() {
     (state: RootState) => state.loginReducer.erroLogin
   );
 
+  const [mensagemErro, setMensagemErro] = useState<string>("");
+
   useEffect(() => {
     if (loginSucesso) {
       history.push("/home");
     }
   }, [loginSucesso]);
+
+  useEffect(() => {
+    if (location.state?.mensagemSessaoExpirou) {
+      const mensagemSessaoExpirou = location.state
+        .mensagemSessaoExpirou as string;
+      setMensagemErro(mensagemSessaoExpirou);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    setMensagemErro(erroLogin);
+  }, [erroLogin]);
 
   const onSubmitLogin = async (values: { login: string; senha: string }) => {
     await dispatch(await loginAction(values.login, values.senha));
@@ -107,7 +122,7 @@ export default function Login() {
             isValid,
           }) => (
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
-              {erroLogin && <Alert severity="error">{erroLogin}</Alert>}
+              {mensagemErro && <Alert severity="error">{mensagemErro}</Alert>}
               <TextField
                 variant="outlined"
                 margin="normal"
