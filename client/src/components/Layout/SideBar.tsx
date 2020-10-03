@@ -1,25 +1,25 @@
-import React from 'react';
+import React from "react";
 
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import { Divider, Drawer } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
-import InputIcon from '@material-ui/icons/Input';
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/styles";
+import { Divider, Drawer } from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+import InputIcon from "@material-ui/icons/Input";
 
-import { Feedback, PersonAdd } from '@material-ui/icons';
-import SidebarNav from './SidebarNav';
+import { Feedback, PersonAdd } from "@material-ui/icons";
+import SidebarNav from "./SidebarNav";
 
-const useStyles = makeStyles((theme:any) => ({
+const useStyles = makeStyles((theme: any) => ({
   drawer: {
     width: 240,
     marginTop: 64,
-    height: 'calc(100% - 64px)',
+    height: "calc(100% - 64px)",
   },
   root: {
-    backgroundColor: '#fff',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
+    backgroundColor: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
     padding: theme.spacing(2),
   },
   divider: {
@@ -30,39 +30,37 @@ const useStyles = makeStyles((theme:any) => ({
   },
 }));
 
-type SidebarProps={
-    open:boolean,
-    variant:'permanent' | 'persistent' | 'temporary' | undefined,
-    onClose:()=>void,
-    className?:string
-}
+type SidebarProps = {
+  open: boolean;
+  variant: "permanent" | "persistent" | "temporary" | undefined;
+  onClose: () => void;
+  className?: string;
+};
 
-const Sidebar:React.FC<SidebarProps> = (props) => {
-  const {
-    open, variant, onClose, className, ...rest
-  } = props;
+const Sidebar: React.FC<SidebarProps> = (props) => {
+  const { open, variant, onClose, className, ...rest } = props;
 
   const classes = useStyles();
 
   const pages = [
     {
-      title: 'Home',
-      href: '/',
+      title: "Home",
+      href: "/",
       icon: <HomeIcon />,
     },
     {
-      title: 'Cadastrar FeedBack',
-      href: '/feedback/cadastro',
+      title: "Cadastrar FeedBack",
+      href: "/feedback/cadastro",
       icon: <Feedback />,
     },
     {
-      title: 'Cadastrar Usuario',
-      href: '/usuario/cadastro',
+      title: "Cadastrar Usuario",
+      href: "/usuario/cadastro",
       icon: <PersonAdd />,
     },
     {
-      title: 'Sair',
-      href: '/login',
+      title: "Sair",
+      href: "/login",
       icon: <InputIcon />,
     },
   ];

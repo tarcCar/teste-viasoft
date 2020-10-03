@@ -1,13 +1,13 @@
-import { PontoMelhorar } from '../../types/pontoMelhorar';
-import { PontoMelhorarActionsTypes } from '../actions/pontoMelhorar/pontoMelhorarActionsTypes';
+import { PontoMelhorar } from "../../types/pontoMelhorar";
+import { PontoMelhorarActionsTypes } from "../actions/pontoMelhorar/pontoMelhorarActionsTypes";
 
 type PontoMelhorarReducerType = {
-  pontosMelhorar: PontoMelhorar[],
-  erroGetPontoMelhorars?: string,
-  loadingGetPontoMelhorars: boolean,
-}
+  pontosMelhorar: PontoMelhorar[];
+  erroGetPontoMelhorars?: string;
+  loadingGetPontoMelhorars: boolean;
+};
 
-const INITIAL_STATE:PontoMelhorarReducerType = {
+const INITIAL_STATE: PontoMelhorarReducerType = {
   pontosMelhorar: [],
   erroGetPontoMelhorars: undefined,
   loadingGetPontoMelhorars: false,
@@ -15,24 +15,24 @@ const INITIAL_STATE:PontoMelhorarReducerType = {
 
 export default function PontoMelhorarReducer(
   state = INITIAL_STATE,
-  action: PontoMelhorarActionsTypes,
+  action: PontoMelhorarActionsTypes
 ): any {
   switch (action.type) {
-    case 'GET_PONTOS_MELHORAR':
+    case "GET_PONTOS_MELHORAR":
       return {
         ...state,
         pontosMelhorar: action.pontosMelhorar,
         erroGetPontoMelhorars: null,
         loadingGetPontoMelhorars: false,
       };
-    case 'GET_PONTOS_MELHORAR_ERROR':
+    case "GET_PONTOS_MELHORAR_ERROR":
       return {
         ...state,
         pontosMelhorar: [],
         erroGetPontoMelhorars: action.error,
         loadingGetPontoMelhorars: false,
       };
-    case 'LOADING_GET_PONTOS_MELHORAR':
+    case "LOADING_GET_PONTOS_MELHORAR":
       return {
         ...state,
         loadingGetPontoMelhorars: action.loading,

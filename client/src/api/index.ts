@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-export default function setUpAxios(history:any) {
+export default function setUpAxios(history: any) {
   setUpBaseURl();
   setUpInterceptors(history);
 }
@@ -8,27 +8,27 @@ export default function setUpAxios(history:any) {
 function setUpBaseURl() {
   axios.defaults.baseURL = process.env.REACT_APP_API
     ? process.env.REACT_APP_API
-    : 'http://localhost:3001/';
+    : "http://localhost:3001/";
 }
 
 /**
-   * Configura um inteceptor que toda requisição feita para api
-   * o axios automaticamente vai colocar o token to header Authorization
-   * onde o servidor vai buscar o token para fazer a validação
-   * @param history
-   */
-function setUpInterceptors(history:any) {
+ * Configura um inteceptor que toda requisição feita para api
+ * o axios automaticamente vai colocar o token to header Authorization
+ * onde o servidor vai buscar o token para fazer a validação
+ * @param history
+ */
+function setUpInterceptors(history: any) {
   axios.interceptors.request.use(
     (config) => {
       const newConfig = config;
-      let token = localStorage.getItem('token');
+      let token = localStorage.getItem("token");
       token = token ? `Bearer ${token}` : null;
       newConfig.headers = {
         Authorization: `${token}`,
       };
       return newConfig;
     },
-    (error) => Promise.reject(error),
+    (error) => Promise.reject(error)
   );
 
   // Configura um inteceptor para todas as respostas da api do servidor
@@ -37,17 +37,17 @@ function setUpInterceptors(history:any) {
   axios.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response.status === 401 && history.location !== '/login') {
+      if (error.response.status === 401 && history.location !== "/login") {
         history.push({
-          pathname: '/login',
+          pathname: "/login",
           state: {
             mensagemSessaoExpirou:
-                'Sua sessão expirou! por favor faça login novamente!',
+              "Sua sessão expirou! por favor faça login novamente!",
           },
         });
       }
 
       return Promise.reject(error);
-    },
+    }
   );
 }

@@ -1,5 +1,5 @@
 export type Login = {
-    id: number;
-    nome: string;
-    token: string;
-  };
+  id: number;
+  nome: string;
+  token: string;
+};

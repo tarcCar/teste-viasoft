@@ -1,19 +1,19 @@
-import { Feedback } from '../../types/feedback';
-import { FeedbackActionsTypes } from '../actions/feedback/feedbackActionsTypes';
+import { Feedback } from "../../types/feedback";
+import { FeedbackActionsTypes } from "../actions/feedback/feedbackActionsTypes";
 
 type FeedbackReducerType = {
-    feedbacksDoUsuario: Feedback[],
-    feedbacksParaUsuario: Feedback[],
-    erroGetFeedBacks?: string,
-    loadingGetFeedbacks: boolean,
-    feedback?:Feedback,
-    erroSaveFeedback?: string,
-    loadingSaveFeedback: boolean,
-    erroGetFeedBackById?: string,
-    loadingGetFeedBackById: boolean,
-  }
+  feedbacksDoUsuario: Feedback[];
+  feedbacksParaUsuario: Feedback[];
+  erroGetFeedBacks?: string;
+  loadingGetFeedbacks: boolean;
+  feedback?: Feedback;
+  erroSaveFeedback?: string;
+  loadingSaveFeedback: boolean;
+  erroGetFeedBackById?: string;
+  loadingGetFeedBackById: boolean;
+};
 
-const INITIAL_STATE:FeedbackReducerType = {
+const INITIAL_STATE: FeedbackReducerType = {
   feedbacksDoUsuario: [],
   feedbacksParaUsuario: [],
   erroGetFeedBacks: undefined,
@@ -27,10 +27,10 @@ const INITIAL_STATE:FeedbackReducerType = {
 
 export default function FeedbackReducer(
   state = INITIAL_STATE,
-  action: FeedbackActionsTypes,
+  action: FeedbackActionsTypes
 ): any {
   switch (action.type) {
-    case 'GET_FEEDBACKS':
+    case "GET_FEEDBACKS":
       return {
         ...state,
         feedbacksDoUsuario: action.feedbacksDoUsuario,
@@ -38,19 +38,19 @@ export default function FeedbackReducer(
         erroGetFeedBacks: null,
         loadingGetFeedbacks: false,
       };
-    case 'GET_FEEDBACKS_ERRO':
+    case "GET_FEEDBACKS_ERRO":
       return {
         ...state,
         feedBacks: [],
         erroGetFeedBacks: action.error,
         loadingGetFeedbacks: false,
       };
-    case 'LOADING_GET_FEEDBACKS':
+    case "LOADING_GET_FEEDBACKS":
       return {
         ...state,
         loadingGetFeedbacks: action.loading,
       };
-    case 'SAVE_FEEDBACK':
+    case "SAVE_FEEDBACK":
       return {
         ...state,
         feedback: action.feedback,
@@ -58,51 +58,53 @@ export default function FeedbackReducer(
         erroSaveFeedback: null,
         loadingSaveFeedback: false,
       };
-    case 'SAVE_FEEDBACK_ERRO':
+    case "SAVE_FEEDBACK_ERRO":
       return {
         ...state,
         feedback: null,
         erroSaveFeedback: action.error,
         loadingSaveFeedback: false,
       };
-    case 'CLEAR_FEEDBACK':
+    case "CLEAR_FEEDBACK":
       return {
         ...state,
         feedback: null,
         erroSaveFeedback: null,
         loadingSaveFeedback: false,
       };
-    case 'LOADING_SAVE_FEEDBACK':
+    case "LOADING_SAVE_FEEDBACK":
       return {
         ...state,
         loadingSaveFeedback: action.loading,
       };
-    case 'UPDATE_FEEDBACK':
+    case "UPDATE_FEEDBACK":
       return {
         ...state,
         feedback: action.feedback,
         feedbacksDoUsuario: [
-          ...state.feedbacksDoUsuario.filter((f) => f.id !== action.feedback.id),
+          ...state.feedbacksDoUsuario.filter(
+            (f) => f.id !== action.feedback.id
+          ),
           action.feedback,
         ],
         erroSaveFeedback: null,
         loadingSaveFeedback: false,
       };
-    case 'GET_FEEDBACK_BY_ID':
+    case "GET_FEEDBACK_BY_ID":
       return {
         ...state,
         feedback: action.feedback,
         erroGetFeedBackById: null,
         loadingGetFeedBackById: false,
       };
-    case 'GET_FEEDBACK_BY_ID_ERRO':
+    case "GET_FEEDBACK_BY_ID_ERRO":
       return {
         ...state,
         feedback: null,
         erroGetFeedBackById: action.error,
         loadingGetFeedBackById: false,
       };
-    case 'LOADING_GET_FEEDBACK_BY_ID':
+    case "LOADING_GET_FEEDBACK_BY_ID":
       return {
         ...state,
         loadingGetFeedBackById: action.loading,

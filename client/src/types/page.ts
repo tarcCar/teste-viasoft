@@ -1,5 +1,5 @@
-export type Page ={
-    title: string,
-    href: string,
-    icon: any,
-}
+export type Page = {
+  title: string;
+  href: string;
+  icon: any;
+};

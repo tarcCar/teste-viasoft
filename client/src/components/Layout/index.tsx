@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 
-import Sidebar from './SideBar';
-import Topbar from './Topbar';
+import Sidebar from "./SideBar";
+import Topbar from "./Topbar";
 
 const useStyles = makeStyles(() => ({
   root: {
     paddingTop: 56,
-    height: '100%',
+    height: "100%",
   },
   shiftContent: {
     paddingLeft: 240,
   },
   content: {
-    height: '100%',
+    height: "100%",
   },
 }));
 
 type LayoutProps = {
-    children:React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const classes = useStyles();
@@ -35,18 +35,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div
-      className={classes.root}
-    >
+    <div className={classes.root}>
       <Topbar onSidebarOpen={handleSidebarOpen} />
       <Sidebar
         onClose={handleSidebarClose}
         open={openSidebar}
         variant="temporary"
       />
-      <main className={classes.content}>
-        {children}
-      </main>
+      <main className={classes.content}>{children}</main>
     </div>
   );
 };

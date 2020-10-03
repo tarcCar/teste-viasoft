@@ -6,6 +6,10 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'prettier',
+    'prettier/react',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -25,6 +29,13 @@ module.exports = {
     'import',
   ],
   rules: {
+    'linebreak-style': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     "react/prop-types":"off",
     "react/no-array-index-key":"off",
     "import/prefer-default-export":"off",

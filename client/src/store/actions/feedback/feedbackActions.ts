@@ -1,41 +1,83 @@
-import { FeedbackActionsTypes } from './feedbackActionsTypes';
+import { FeedbackActionsTypes } from "./feedbackActionsTypes";
 import {
-  getAllFeedback, getFeedbackById, saveFeedback, updateFeedback,
-} from '../../../services/feedbackService';
-import { Feedback } from '../../../types/feedback';
+  getAllFeedback,
+  getFeedbackById,
+  saveFeedback,
+  updateFeedback,
+} from "../../../services/feedbackService";
+import { Feedback } from "../../../types/feedback";
 
 const setGetFeedbacks = (
-  feedbacksDoUsuario: Feedback[], feedbacksParaUsuario:Feedback[],
-): FeedbackActionsTypes => (
-  { type: 'GET_FEEDBACKS', feedbacksDoUsuario, feedbacksParaUsuario }
-);
-const setGetFeedbacksErro = (error: string): FeedbackActionsTypes => ({ type: 'GET_FEEDBACKS_ERRO', error });
-const setGetFeedbacksLoading = (loading: boolean): FeedbackActionsTypes => ({ type: 'LOADING_GET_FEEDBACKS', loading });
+  feedbacksDoUsuario: Feedback[],
+  feedbacksParaUsuario: Feedback[]
+): FeedbackActionsTypes => ({
+  type: "GET_FEEDBACKS",
+  feedbacksDoUsuario,
+  feedbacksParaUsuario,
+});
+const setGetFeedbacksErro = (error: string): FeedbackActionsTypes => ({
+  type: "GET_FEEDBACKS_ERRO",
+  error,
+});
+const setGetFeedbacksLoading = (loading: boolean): FeedbackActionsTypes => ({
+  type: "LOADING_GET_FEEDBACKS",
+  loading,
+});
 
-const setSaveFeedback = (feedback?: Feedback): FeedbackActionsTypes => ({ type: 'SAVE_FEEDBACK', feedback });
-const setSaveFeedbackErro = (error: string): FeedbackActionsTypes => ({ type: 'SAVE_FEEDBACK_ERRO', error });
-const setSaveFeedbackLoading = (loading: boolean): FeedbackActionsTypes => ({ type: 'LOADING_SAVE_FEEDBACK', loading });
+const setSaveFeedback = (feedback?: Feedback): FeedbackActionsTypes => ({
+  type: "SAVE_FEEDBACK",
+  feedback,
+});
+const setSaveFeedbackErro = (error: string): FeedbackActionsTypes => ({
+  type: "SAVE_FEEDBACK_ERRO",
+  error,
+});
+const setSaveFeedbackLoading = (loading: boolean): FeedbackActionsTypes => ({
+  type: "LOADING_SAVE_FEEDBACK",
+  loading,
+});
 
-const setUpdateFeedback = (feedback: Feedback): FeedbackActionsTypes => ({ type: 'UPDATE_FEEDBACK', feedback });
+const setUpdateFeedback = (feedback: Feedback): FeedbackActionsTypes => ({
+  type: "UPDATE_FEEDBACK",
+  feedback,
+});
 
-const setGetFeedbackById = (feedback: Feedback): FeedbackActionsTypes => ({ type: 'GET_FEEDBACK_BY_ID', feedback });
-const setGetFeedbackByIdErro = (error: string): FeedbackActionsTypes => ({ type: 'GET_FEEDBACK_BY_ID_ERRO', error });
-const setGetFeedbackByIdLoading = (loading: boolean): FeedbackActionsTypes => ({ type: 'LOADING_GET_FEEDBACK_BY_ID', loading });
-const setClearFeedback = (): FeedbackActionsTypes => ({ type: 'CLEAR_FEEDBACK' });
+const setGetFeedbackById = (feedback: Feedback): FeedbackActionsTypes => ({
+  type: "GET_FEEDBACK_BY_ID",
+  feedback,
+});
+const setGetFeedbackByIdErro = (error: string): FeedbackActionsTypes => ({
+  type: "GET_FEEDBACK_BY_ID_ERRO",
+  error,
+});
+const setGetFeedbackByIdLoading = (loading: boolean): FeedbackActionsTypes => ({
+  type: "LOADING_GET_FEEDBACK_BY_ID",
+  loading,
+});
+const setClearFeedback = (): FeedbackActionsTypes => ({
+  type: "CLEAR_FEEDBACK",
+});
 
 export const getFeedbacksAction = (): any => async (dispatch: any) => {
   try {
     dispatch(setGetFeedbacksLoading(true));
     const feedbacks = await getAllFeedback();
 
-    dispatch(setGetFeedbacks(feedbacks.feedbacksDoUsuario, feedbacks.feedbacksParaUsuario));
+    dispatch(
+      setGetFeedbacks(
+        feedbacks.feedbacksDoUsuario,
+        feedbacks.feedbacksParaUsuario
+      )
+    );
   } catch (error) {
     console.log(error);
     dispatch(setGetFeedbacksErro(error.message));
   }
 };
 
-export const saveFeedbacksAction = (feedback:Feedback): any => async (dispatch: any) => {
+export const saveFeedbacksAction = (feedback: Feedback): any => async (
+  dispatch: any
+) => {
   try {
     dispatch(setSaveFeedbackLoading(true));
 
@@ -52,7 +94,9 @@ export const saveFeedbacksAction = (feedback:Feedback): any => async (dispatch: 
   }
 };
 
-export const getFeedbacByIdkAction = (id:string): any => async (dispatch: any) => {
+export const getFeedbacByIdkAction = (id: string): any => async (
+  dispatch: any
+) => {
   try {
     dispatch(setGetFeedbackByIdLoading(true));
     const novoFeedback = await getFeedbackById(id);

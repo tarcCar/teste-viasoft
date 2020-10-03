@@ -8,21 +8,19 @@ import {
   makeStyles,
   Paper,
   TextField,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import {
-  Formik, FormikProps,
-} from 'formik';
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { saveUsuarioAction } from '../../../store/actions/usuario/usuarioActions';
-import { RootState } from '../../../store/reducers';
-import { Usuario } from '../../../types/usuario';
+} from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { Formik, FormikProps } from "formik";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { saveUsuarioAction } from "../../../store/actions/usuario/usuarioActions";
+import { RootState } from "../../../store/reducers";
+import { Usuario } from "../../../types/usuario";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    width: '100%',
+    width: "100%",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -34,26 +32,30 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
 }));
 
-interface UsuarioForm extends Usuario {
-
-}
+interface UsuarioForm extends Usuario {}
 
 const initialValues: UsuarioForm = {};
 
 const CadastroUsuario: React.FC = () => {
   const formRef = useRef<FormikProps<UsuarioForm> | null>(null);
   const classes = useStyles();
-  const loading = useSelector((state:RootState) => state.usuarioReducer.loadingSaveUsuario);
-  const erroSaveUsuario = useSelector((state:RootState) => state.usuarioReducer.erroSaveUsuario);
-  const usuarioSalvo = useSelector((state:RootState) => state.usuarioReducer.usuarioSalvo);
+  const loading = useSelector(
+    (state: RootState) => state.usuarioReducer.loadingSaveUsuario
+  );
+  const erroSaveUsuario = useSelector(
+    (state: RootState) => state.usuarioReducer.erroSaveUsuario
+  );
+  const usuarioSalvo = useSelector(
+    (state: RootState) => state.usuarioReducer.usuarioSalvo
+  );
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -63,7 +65,7 @@ const CadastroUsuario: React.FC = () => {
     }
   }, [usuarioSalvo]);
 
-  const onSubmitCadastro = async (values:Usuario) => {
+  const onSubmitCadastro = async (values: Usuario) => {
     if (values) {
       dispatch(saveUsuarioAction(values));
     }
@@ -78,16 +80,16 @@ const CadastroUsuario: React.FC = () => {
             innerRef={formRef}
             initialValues={initialValues}
             validate={(values) => {
-              const errors:any = {};
+              const errors: any = {};
               if (!values.login) {
-                errors.login = 'Login é obrigatório';
+                errors.login = "Login é obrigatório";
               }
               if (!values.nome) {
-                errors.nome = 'Nome é obrigatório';
+                errors.nome = "Nome é obrigatório";
               }
 
               if (!values.senha) {
-                errors.senha = 'Senha é obrigatória';
+                errors.senha = "Senha é obrigatória";
               }
 
               return errors;
@@ -107,8 +109,9 @@ const CadastroUsuario: React.FC = () => {
             }) => (
               <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <Paper className={classes.paper}>
-
-                  {erroSaveUsuario && <Alert severity="error">{erroSaveUsuario}</Alert>}
+                  {erroSaveUsuario && (
+                    <Alert severity="error">{erroSaveUsuario}</Alert>
+                  )}
 
                   <TextField
                     className={classes.field}
@@ -125,7 +128,6 @@ const CadastroUsuario: React.FC = () => {
                     value={values.nome}
                     error={errors.nome ? true : false && touched.nome}
                     helperText={errors.nome}
-
                   />
                   <TextField
                     className={classes.field}
@@ -169,16 +171,19 @@ const CadastroUsuario: React.FC = () => {
                     disabled={!isValid || loading}
                   >
                     Salvar
-                    {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                    {loading && (
+                      <CircularProgress
+                        size={24}
+                        className={classes.buttonProgress}
+                      />
+                    )}
                   </Button>
                 </Paper>
-
               </form>
             )}
           </Formik>
         </CardContent>
       </Card>
-
     </Container>
   );
 };

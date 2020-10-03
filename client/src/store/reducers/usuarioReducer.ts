@@ -1,16 +1,16 @@
-import { Usuario } from '../../types/usuario';
-import { UsuarioActionsTypes } from '../actions/usuario/usuarioActionsTypes';
+import { Usuario } from "../../types/usuario";
+import { UsuarioActionsTypes } from "../actions/usuario/usuarioActionsTypes";
 
 type UsuarioReducerType = {
-  usuarios: Usuario[],
-  usuarioSalvo?: Usuario,
-  erroGetUsuarios?: string,
-  loadingGetUsuarios: boolean,
-  erroSaveUsuario?: string,
-  loadingSaveUsuario: boolean,
-}
+  usuarios: Usuario[];
+  usuarioSalvo?: Usuario;
+  erroGetUsuarios?: string;
+  loadingGetUsuarios: boolean;
+  erroSaveUsuario?: string;
+  loadingSaveUsuario: boolean;
+};
 
-const INITIAL_STATE:UsuarioReducerType = {
+const INITIAL_STATE: UsuarioReducerType = {
   usuarios: [],
   usuarioSalvo: undefined,
   erroGetUsuarios: undefined,
@@ -21,30 +21,30 @@ const INITIAL_STATE:UsuarioReducerType = {
 
 export default function UsuarioReducer(
   state = INITIAL_STATE,
-  action: UsuarioActionsTypes,
+  action: UsuarioActionsTypes
 ): any {
   switch (action.type) {
-    case 'GET_USUARIOS':
+    case "GET_USUARIOS":
       return {
         ...state,
         usuarios: action.usuarios,
         erroGetUsuarios: null,
         loadingGetUsuarios: false,
       };
-    case 'GET_USUARIOS_ERROR':
+    case "GET_USUARIOS_ERROR":
       return {
         ...state,
         usuarios: [],
         erroGetUsuarios: action.error,
         loadingGetUsuarios: false,
       };
-    case 'LOADING_GET_USUARIOS':
+    case "LOADING_GET_USUARIOS":
       return {
         ...state,
         loadingGetUsuarios: action.loading,
       };
 
-    case 'SAVE_USUARIO':
+    case "SAVE_USUARIO":
       return {
         ...state,
         usuarioSalvo: action.usuario,
@@ -52,14 +52,14 @@ export default function UsuarioReducer(
         erroSaveUsuario: null,
         loadingSaveUsuario: false,
       };
-    case 'SAVE_USUARIO_ERROR':
+    case "SAVE_USUARIO_ERROR":
       return {
         ...state,
         usuarios: [],
         erroSaveUsuario: action.error,
         loadingSaveUsuario: false,
       };
-    case 'LOADING_SAVE_USUARIO':
+    case "LOADING_SAVE_USUARIO":
       return {
         ...state,
         loadingSaveUsuario: action.loading,

@@ -1,44 +1,44 @@
-import React, { useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Formik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
-import { useHistory } from 'react-router';
-import Alert from '@material-ui/lab/Alert';
-import { RootState } from '../../store/reducers';
-import loginAction from '../../store/actions/login/loginActions';
+import React, { useEffect } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
+import { useHistory } from "react-router";
+import Alert from "@material-ui/lab/Alert";
+import { RootState } from "../../store/reducers";
+import loginAction from "../../store/actions/login/loginActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -49,20 +49,23 @@ export default function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const loading = useSelector((state:RootState) => state.loginReducer.loadingLogin);
-  const loginSucesso = useSelector((state:RootState) => state.loginReducer.login);
-  const erroLogin = useSelector((state:RootState) => state.loginReducer.erroLogin);
+  const loading = useSelector(
+    (state: RootState) => state.loginReducer.loadingLogin
+  );
+  const loginSucesso = useSelector(
+    (state: RootState) => state.loginReducer.login
+  );
+  const erroLogin = useSelector(
+    (state: RootState) => state.loginReducer.erroLogin
+  );
 
   useEffect(() => {
     if (loginSucesso) {
-      history.push('/home');
+      history.push("/home");
     }
   }, [loginSucesso]);
 
-  const onSubmitLogin = async (values: {
-    login: string;
-    senha: string;
-  }) => {
+  const onSubmitLogin = async (values: { login: string; senha: string }) => {
     await dispatch(await loginAction(values.login, values.senha));
   };
 
@@ -77,16 +80,16 @@ export default function Login() {
           Entre
         </Typography>
         <Formik
-          initialValues={{ login: '', senha: '' }}
+          initialValues={{ login: "", senha: "" }}
           validate={(values) => {
-            const errors:any = {};
+            const errors: any = {};
             if (!values.login) {
-              errors.login = 'Login é obrigatório';
+              errors.login = "Login é obrigatório";
             }
             if (!values.senha) {
-              errors.senha = 'Senha é obrigatória';
+              errors.senha = "Senha é obrigatória";
             } else if (values.senha.length < 6) {
-              errors.senha = 'Senha precisa ter 6 ou mais caracteres';
+              errors.senha = "Senha precisa ter 6 ou mais caracteres";
             }
             return errors;
           }}
@@ -147,7 +150,12 @@ export default function Login() {
                 disabled={!isValid || loading}
               >
                 Entrar
-                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                )}
               </Button>
               <Grid container>
                 <Grid item>
@@ -160,7 +168,6 @@ export default function Login() {
           )}
         </Formik>
       </div>
-
     </Container>
   );
 }

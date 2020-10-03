@@ -1,16 +1,12 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/styles";
+import { AppBar, Toolbar, IconButton } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 
-const useStyles = makeStyles((theme:any) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: {
-    boxShadow: 'none',
+    boxShadow: "none",
   },
   flexGrow: {
     flexGrow: 1,
@@ -21,11 +17,11 @@ const useStyles = makeStyles((theme:any) => ({
 }));
 
 type TopbarProps = {
-    className?:string,
-    onSidebarOpen:()=>void
-}
+  className?: string;
+  onSidebarOpen: () => void;
+};
 
-const Topbar:React.FC<TopbarProps> = (props) => {
+const Topbar: React.FC<TopbarProps> = (props) => {
   const { className, onSidebarOpen, ...rest } = props;
   const classes = useStyles();
 
