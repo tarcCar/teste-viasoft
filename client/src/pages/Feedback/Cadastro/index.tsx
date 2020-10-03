@@ -7,14 +7,16 @@ import {
   TextField,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import { Formik } from 'formik';
-import React, { useEffect } from 'react';
+import {
+  Formik, FormikProps,
+} from 'formik';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import InputPontoManter from '../../../components/PontoManter/Input';
 import InputPontoMelhorar from '../../../components/PontoMelhorar/Input';
 import SelectUsuario from '../../../components/Usuario/Select';
-import { saveFeedbacksAction } from '../../../store/actions/feedback/feedbackActions';
+import { saveFeedbacksAction, clearFeedbackAction } from '../../../store/actions/feedback/feedbackActions';
 import { RootState } from '../../../store/reducers';
 import { Feedback } from '../../../types/feedback';
 
@@ -52,28 +54,51 @@ const initialValues: FeedbackForm = {
 };
 
 const CadastroFeedback: React.FC = () => {
+  const formRef = useRef<FormikProps<FeedbackForm> | null>(null);
   const classes = useStyles();
   const loading = useSelector((state:RootState) => state.feedbackReducer.loadingSaveFeedback);
   const erroSaveUsuario = useSelector((state:RootState) => state.feedbackReducer.erroSaveFeedback);
   const feedback = useSelector((state:RootState) => state.feedbackReducer.feedback);
   const history = useHistory();
+  const location = useLocation<any>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (feedback) {
+      dispatch(clearFeedbackAction());
       history.push('/home');
     }
   }, [feedback]);
 
   const onSubmitCadastro = async (values:Feedback) => {
     if (values) {
+      console.log(values);
+
       dispatch(saveFeedbacksAction(values));
     }
   };
 
+  useEffect(() => {
+    if (location.state.feedBackParaAtualizar) {
+      const feedBackParaAtualizar = location.state.feedBackParaAtualizar as Feedback;
+      if (formRef.current) {
+        const form = formRef.current;
+        console.log(feedBackParaAtualizar);
+        form.setFieldValue('id', feedBackParaAtualizar.id);
+        form.setFieldValue('pontosManter', feedBackParaAtualizar.pontosManter, false);
+        form.setFieldValue('pontosMelhorar', feedBackParaAtualizar.pontosMelhorar, false);
+        form.setFieldValue('sugestoes', feedBackParaAtualizar.sugestoes, false);
+        form.setFieldValue('usuarioDestino', feedBackParaAtualizar.usuarioDestino, false);
+        form.setFieldValue('feedBackFinal', feedBackParaAtualizar.feedBackFinal, false);
+        form.validateForm();
+      }
+    }
+  }, [location]);
+
   return (
     <Container component="main" maxWidth="lg">
       <Formik
+        innerRef={formRef}
         initialValues={initialValues}
         validate={(values) => {
           const errors:any = {};
@@ -121,11 +146,9 @@ const CadastroFeedback: React.FC = () => {
                 name="usuarioDestino"
                 autoComplete="usuarioDestino"
                 autoFocus
-                onChange={handleChange}
                 onSelect={handleChange}
-                onBlur={handleBlur}
                 value={values.usuarioDestino}
-                error={errors.usuarioDestino ? true : false && touched.usuarioDestino}
+                error={errors.usuarioDestino ? false : true && touched.usuarioDestino}
                 errorText={errors.usuarioDestino}
               />
 
@@ -135,6 +158,7 @@ const CadastroFeedback: React.FC = () => {
                   setFieldValue('pontosManter', value);
                 }}
                 errorText={errors.pontosManter}
+                value={values.pontosManter}
               />
               <InputPontoMelhorar
                 fullWidth
@@ -142,6 +166,8 @@ const CadastroFeedback: React.FC = () => {
                   setFieldValue('pontosMelhorar', value);
                 }}
                 errorText={errors.pontosMelhorar}
+                value={values.pontosMelhorar}
+
               />
               <TextField
                 className={classes.field}

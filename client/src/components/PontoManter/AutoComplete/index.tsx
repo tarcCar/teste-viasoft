@@ -16,7 +16,7 @@ const filter = createFilterOptions<PontoManterFilter>();
 
 interface PontoManterAutoCompleteProps {
   onPontoManterSelected:(v?:PontoManter)=>void
-  error?:boolean
+  error?:boolean,
 }
 
 export const PontoManterAutoComplete:React.FC<PontoManterAutoCompleteProps> = (

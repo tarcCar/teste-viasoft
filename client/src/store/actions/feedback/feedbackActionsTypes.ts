@@ -16,7 +16,7 @@ type LOADING_GET_FEEDBACKS= {
 
 type SAVE_FEEDBACK = {
     type: 'SAVE_FEEDBACK';
-    feedback: Feedback;
+    feedback?: Feedback;
   };
 type SAVE_FEEDBACK_ERRO = {
     type: 'SAVE_FEEDBACK_ERRO';
@@ -46,6 +46,10 @@ type LOADING_GET_FEEDBACK_BY_ID= {
     loading: boolean;
   };
 
+  type CLEAR_FEEDBACK= {
+    type: 'CLEAR_FEEDBACK'
+  };
+
 export type FeedbackActionsTypes =
     | GET_FEEDBACKS
     | GET_FEEDBACKS_ERRO
@@ -56,4 +60,5 @@ export type FeedbackActionsTypes =
     | UPDATE_FEEDBACK
     | GET_FEEDBACK_BY_ID
     | GET_FEEDBACK_BY_ID_ERRO
-    | LOADING_GET_FEEDBACK_BY_ID;
+    | LOADING_GET_FEEDBACK_BY_ID
+    | CLEAR_FEEDBACK;

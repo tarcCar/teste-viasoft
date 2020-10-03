@@ -11,32 +11,33 @@ import { PontoMelhorarAutoComplete } from '../AutoComplete';
 interface InputPontoMelhorarProps{
   errorText?: string,
   fullWidth?:boolean,
-  onPontosMelhorarSelecionados:(v?:PontoMelhorar[])=>void
+  onPontosMelhorarSelecionados:(v?:PontoMelhorar[])=>void,
+  value?: PontoMelhorar[]
 }
 
 const InputPontoMelhorar: React.FC<InputPontoMelhorarProps> = (
   {
-    onPontosMelhorarSelecionados, errorText, ...props
+    onPontosMelhorarSelecionados, errorText, value, ...props
   },
 ) => {
   const [pontosSelecionados, setPontosSelecionados] = useState<PontoMelhorar[]>([]);
 
-  const onChangeHandler = (value?:PontoMelhorar) => {
-    if (value) {
-      const novosPontos = [...pontosSelecionados, value];
-      setPontosSelecionados(novosPontos);
+  const onChangeHandler = (newValue?:PontoMelhorar) => {
+    if (newValue) {
+      const novosPontos = [...pontosSelecionados, newValue];
+      if (onPontosMelhorarSelecionados) onPontosMelhorarSelecionados(novosPontos);
     }
   };
 
   const onDeleteClickHandler = (index:number) => {
     const novosPontos = [...pontosSelecionados];
     novosPontos.splice(index, 1);
-    setPontosSelecionados(novosPontos);
+    if (onPontosMelhorarSelecionados) onPontosMelhorarSelecionados(novosPontos);
   };
 
   useEffect(() => {
-    if (onPontosMelhorarSelecionados) onPontosMelhorarSelecionados(pontosSelecionados);
-  }, [pontosSelecionados]);
+    setPontosSelecionados(value || []);
+  }, [value]);
 
   return (
     <>

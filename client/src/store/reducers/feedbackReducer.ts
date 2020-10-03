@@ -65,6 +65,13 @@ export default function FeedbackReducer(
         erroSaveFeedback: action.error,
         loadingSaveFeedback: false,
       };
+    case 'CLEAR_FEEDBACK':
+      return {
+        ...state,
+        feedback: null,
+        erroSaveFeedback: null,
+        loadingSaveFeedback: false,
+      };
     case 'LOADING_SAVE_FEEDBACK':
       return {
         ...state,

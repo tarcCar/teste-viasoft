@@ -1,45 +1,47 @@
 /* eslint-disable no-unused-vars */
-import {
-  Divider,
-  FormHelperText,
-  Grid,
-  IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, SelectProps,
-} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import {
+  FormHelperText,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import { PontoManter } from '../../../types/pontoManter';
 import { PontoManterAutoComplete } from '../AutoComplete';
 
 interface InputPontoManterProps{
   errorText?: string,
   fullWidth?:boolean,
-  onPontosManterSelecionados:(v?:PontoManter[])=>void
+  onPontosManterSelecionados: (v?:PontoManter[])=>void,
+  value?: PontoManter[]
 }
 
 const InputPontoManter: React.FC<InputPontoManterProps> = (
   {
-    onPontosManterSelecionados, errorText, ...props
+    onPontosManterSelecionados, errorText, value, ...props
   },
 ) => {
   const [pontosSelecionados, setPontosSelecionados] = useState<PontoManter[]>([]);
 
-  const onChangeHandler = (value?:PontoManter) => {
-    if (value) {
-      const novosPontos = [...pontosSelecionados, value];
-      setPontosSelecionados(novosPontos);
+  const onChangeHandler = (newValue?:PontoManter) => {
+    if (newValue) {
+      const novosPontos = [...pontosSelecionados, newValue];
+      if (onPontosManterSelecionados) onPontosManterSelecionados(novosPontos);
     }
   };
 
   const onDeleteClickHandler = (index:number) => {
     const novosPontos = [...pontosSelecionados];
     novosPontos.splice(index, 1);
-    setPontosSelecionados(novosPontos);
+    if (onPontosManterSelecionados) onPontosManterSelecionados(novosPontos);
   };
 
   useEffect(() => {
-    if (onPontosManterSelecionados) onPontosManterSelecionados(pontosSelecionados);
-  }, [pontosSelecionados]);
+    setPontosSelecionados(value || []);
+  }, [value]);
 
   return (
     <>

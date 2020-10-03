@@ -10,6 +10,6 @@ export type Feedback = {
     usuarioDestino?: Usuario;
     pontosManter?: PontoManter[];
     pontosMelhorar?: PontoMelhorar[];
-    criadoEm?: Date;
-    alteradoEm?: Date;
+    criadoEm?: string;
+    alteradoEm?: string;
 }

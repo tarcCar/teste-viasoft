@@ -12,7 +12,7 @@ const setGetFeedbacks = (
 const setGetFeedbacksErro = (error: string): FeedbackActionsTypes => ({ type: 'GET_FEEDBACKS_ERRO', error });
 const setGetFeedbacksLoading = (loading: boolean): FeedbackActionsTypes => ({ type: 'LOADING_GET_FEEDBACKS', loading });
 
-const setSaveFeedback = (feedback: Feedback): FeedbackActionsTypes => ({ type: 'SAVE_FEEDBACK', feedback });
+const setSaveFeedback = (feedback?: Feedback): FeedbackActionsTypes => ({ type: 'SAVE_FEEDBACK', feedback });
 const setSaveFeedbackErro = (error: string): FeedbackActionsTypes => ({ type: 'SAVE_FEEDBACK_ERRO', error });
 const setSaveFeedbackLoading = (loading: boolean): FeedbackActionsTypes => ({ type: 'LOADING_SAVE_FEEDBACK', loading });
 
@@ -21,14 +21,14 @@ const setUpdateFeedback = (feedback: Feedback): FeedbackActionsTypes => ({ type:
 const setGetFeedbackById = (feedback: Feedback): FeedbackActionsTypes => ({ type: 'GET_FEEDBACK_BY_ID', feedback });
 const setGetFeedbackByIdErro = (error: string): FeedbackActionsTypes => ({ type: 'GET_FEEDBACK_BY_ID_ERRO', error });
 const setGetFeedbackByIdLoading = (loading: boolean): FeedbackActionsTypes => ({ type: 'LOADING_GET_FEEDBACK_BY_ID', loading });
+const setClearFeedback = (): FeedbackActionsTypes => ({ type: 'CLEAR_FEEDBACK' });
 
-export const getFeedbacksAction = (idUsuario:number): any => async (dispatch: any) => {
+export const getFeedbacksAction = (): any => async (dispatch: any) => {
   try {
     dispatch(setGetFeedbacksLoading(true));
     const feedbacks = await getAllFeedback();
-    const feedbacksDoUsuario = feedbacks.filter((f) => f.usuarioOrigem?.id === idUsuario);
-    const feedbacksParaUsuario = feedbacks.filter((f) => f.usuarioDestino?.id === idUsuario);
-    dispatch(setGetFeedbacks(feedbacksDoUsuario, feedbacksParaUsuario));
+
+    dispatch(setGetFeedbacks(feedbacks.feedbacksDoUsuario, feedbacks.feedbacksParaUsuario));
   } catch (error) {
     console.log(error);
     dispatch(setGetFeedbacksErro(error.message));
@@ -62,4 +62,8 @@ export const getFeedbacByIdkAction = (id:string): any => async (dispatch: any) =
     console.log(error);
     dispatch(setGetFeedbackByIdErro(error.message));
   }
+};
+
+export const clearFeedbackAction = (): any => async (dispatch: any) => {
+  dispatch(setClearFeedback());
 };
