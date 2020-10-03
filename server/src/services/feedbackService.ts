@@ -4,6 +4,11 @@ import { Repository } from "typeorm";
 import { TYPE_DI } from "@constants/typesInjecaoDependencia";
 import { Feedback } from "@models/feedback";
 
+type FeedBacks = {
+  feedbacksDoUsuario: Feedback[];
+  feedbacksParaUsuario: Feedback[];
+};
+
 @injectable()
 export class FeedbackService {
   public constructor(
@@ -17,9 +22,14 @@ export class FeedbackService {
     );
   }
 
-  public async listar(idUsuario: string): Promise<Feedback[]> {
-    return this.feedbackRepository.find({
-      relations: ["usuarioOrigem", "usuarioDestino"],
+  public async listar(idUsuario: number): Promise<FeedBacks> {
+    const feedbacks = await this.feedbackRepository.find({
+      relations: [
+        "usuarioOrigem",
+        "usuarioDestino",
+        "pontosManter",
+        "pontosMelhorar",
+      ],
       where: [
         {
           usuarioOrigem: idUsuario,
@@ -29,6 +39,14 @@ export class FeedbackService {
         },
       ],
     });
+    return {
+      feedbacksDoUsuario: feedbacks.filter(
+        (f) => f.usuarioOrigem.id === idUsuario
+      ),
+      feedbacksParaUsuario: feedbacks.filter(
+        (f) => f.usuarioDestino.id === idUsuario
+      ),
+    };
   }
 
   public async buscarPorId(id: string): Promise<Feedback> {
